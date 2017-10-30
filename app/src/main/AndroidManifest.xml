@@ -23,17 +23,18 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".gallery.GalleryActivity"/>
+
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.huutho.photo.fileprovider"
+            android:authorities="${applicationId}.provider"
             android:exported="false"
             android:grantUriPermissions="true"
             tools:replace="android:authorities">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"
-                tools:replace="android:resource"/>
+                android:resource="@xml/file_paths" />
         </provider>
 
     </application>

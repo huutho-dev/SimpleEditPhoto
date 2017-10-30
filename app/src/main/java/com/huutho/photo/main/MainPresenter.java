@@ -68,12 +68,7 @@ public class MainPresenter extends MvpPresenter<MainView> {
 
                             switch (permission) {
                                 case Manifest.permission.CAMERA:
-                                    try {
-                                        mImagePath = createImageFile().getAbsolutePath();
-                                        getViewState().openCamera(createImageFile());
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
+                                    getViewState().openCamera();
                                     break;
 
                                 case Manifest.permission.READ_EXTERNAL_STORAGE:
@@ -100,17 +95,14 @@ public class MainPresenter extends MvpPresenter<MainView> {
 
     }
 
-    private File createImageFile() throws IOException {
+    public static File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
         File storageDir = App.getInstance().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File image = File.createTempFile(
+        return File.createTempFile(
                 imageFileName,  /* prefix */
                 ".jpg",         /* suffix */
                 storageDir      /* directory */
         );
-
-        // Save a file: path for use with ACTION_VIEW intents
-        return image;
     }
 }

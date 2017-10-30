@@ -12,8 +12,10 @@ import android.widget.ImageView;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.huutho.photo.R;
+import com.huutho.photo.gallery.GalleryActivity;
 
 import java.io.File;
+import java.io.IOException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,19 +67,25 @@ public class MainActivity extends MvpAppCompatActivity implements MainView {
     }
 
     @Override
-    public void openCamera(File fileToSave) {
-        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        Uri photoUri = FileProvider.getUriForFile(this, "com.huutho.photo.fileprovider",fileToSave);
-        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-        if (cameraIntent.resolveActivity(getPackageManager()) != null) {
-            startActivityForResult(cameraIntent, REQ_CAMERA);
+    public void openCamera() {
+        try {
+            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            Uri photoUri = FileProvider.getUriForFile(this,
+                    "com.huutho.photo.provider",
+                    MainPresenter.createImageFile());
+            cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
+            if (cameraIntent.resolveActivity(getPackageManager()) != null) {
+                startActivityForResult(cameraIntent, REQ_CAMERA);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        Log.e("ThoNH","PathImage:"+fileToSave);
     }
 
     @Override
     public void startGallery() {
-
+        Intent intent = new Intent(this, GalleryActivity.class);
+        startActivity(intent);
     }
 
     @Override
