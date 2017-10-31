@@ -131,6 +131,18 @@
             android:orientation="horizontal">
 
             <Button
+                android:id="@+id/imv_free"
+                style="@style/ButtonCrop"
+                android:text="Free"/>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="8dp"
+                android:background="@color/white"/>
+
+            <Button
                 android:id="@+id/imv_fit_image"
                 style="@style/ButtonCrop"
                 android:text="Fit Image"/>
@@ -146,19 +158,6 @@
                 android:id="@+id/imv_square"
                 style="@style/ButtonCrop"
                 android:text="Square"/>
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="8dp"
-                android:layout_marginTop="8dp"
-                android:background="@color/white"/>
-
-            <Button
-                android:id="@+id/imv_free"
-                style="@style/ButtonCrop"
-                android:text="Free"/>
-
 
             <View
                 android:layout_width="1dp"

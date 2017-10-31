@@ -4,6 +4,10 @@ import android.app.Application;
 import android.graphics.Bitmap;
 import android.support.v4.util.LruCache;
 
+import com.huutho.photo.di.DaggerEditorComponent;
+import com.huutho.photo.di.EditorComponent;
+import com.huutho.photo.di.module.EditorModule;
+
 /**
  * Created by ThoNh on 10/30/2017.
  */
@@ -11,6 +15,7 @@ import android.support.v4.util.LruCache;
 public class App extends Application {
 
     private static App instance;
+    public static EditorComponent editorComponent;
 
     public static App getInstance() {
         return instance;
@@ -24,8 +29,14 @@ public class App extends Application {
         super.onCreate();
         instance = this;
         initCacheForBitmap();
-    }
 
+        editorComponent = DaggerEditorComponent
+                .builder()
+                .editorModule(new EditorModule())
+                .build();
+
+
+    }
 
 
     // ========================================= CACHE =============================================
