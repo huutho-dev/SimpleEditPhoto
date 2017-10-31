@@ -25,6 +25,9 @@
 
         <activity android:name=".gallery.GalleryActivity"/>
 
+        <activity android:name=".crop.CropActivity"/>
+
+        <activity android:name=".edit.EditActivity"/>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

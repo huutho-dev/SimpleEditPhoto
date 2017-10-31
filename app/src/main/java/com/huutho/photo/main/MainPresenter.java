@@ -68,8 +68,15 @@ public class MainPresenter extends MvpPresenter<MainView> {
 
                             switch (permission) {
                                 case Manifest.permission.CAMERA:
-                                    getViewState().openCamera();
-                                    break;
+                                    try {
+                                        File file = createImageFile();
+                                        mImagePath = file.getAbsolutePath();
+                                        getViewState().openCamera(file);
+                                        break;
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                    return;
 
                                 case Manifest.permission.READ_EXTERNAL_STORAGE:
                                     getViewState().startGallery();

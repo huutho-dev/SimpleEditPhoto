@@ -1,5 +1,6 @@
 package com.huutho.photo.gallery;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -9,6 +10,7 @@ import android.view.View;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.huutho.photo.R;
+import com.huutho.photo.crop.CropActivity;
 import com.huutho.photo.gallery.fragment.albums.GalleryAlbumsFragment;
 import com.huutho.photo.gallery.fragment.images.GalleryImagesFragment;
 import com.huutho.photo.models.Image;
@@ -94,6 +96,9 @@ public class GalleryActivity extends MvpAppCompatActivity implements GalleryView
      * @param image
      */
     public void startEdit(Image image) {
-
+        finish();
+        Intent intent = new Intent(this, CropActivity.class);
+        intent.putExtra(CropActivity.EXTRA_IMAGE_PATH, image.mPath);
+        startActivity(intent);
     }
 }

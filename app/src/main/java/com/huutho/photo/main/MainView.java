@@ -10,7 +10,7 @@ import java.io.File;
 
 public interface MainView extends MvpView {
 
-    void openCamera();
+    void openCamera(File file);
 
     void startGallery();
 

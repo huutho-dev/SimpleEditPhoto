@@ -16,10 +16,10 @@
         <ImageView
             android:id="@+id/imv_icon_intro"
             android:layout_width="match_parent"
-            android:layout_height="220dp"
+            android:layout_height="280dp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:padding="16dp"
+            android:padding="48dp"
             android:src="@drawable/ic_launcher"/>
 
     </FrameLayout>
