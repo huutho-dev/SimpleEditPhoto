@@ -61,6 +61,10 @@ public class App extends Application {
 
     }
 
+    public void removeBitmapMemoryCache(String key){
+        mMemoryCache.remove(key);
+    }
+
     public void saveBitmapToMemoryCache(String key, Bitmap bitmap) {
         if (getBitmapFromMemoryCache(key) == null) {
             mMemoryCache.put(key, bitmap);

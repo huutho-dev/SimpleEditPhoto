@@ -115,9 +115,11 @@ public class CropActivity extends MvpAppCompatActivity implements CropView {
 
             case R.id.imv_done:
                 Bitmap bitmapCrop = mCropImageView.getCroppedBitmap();
+                App.getInstance().removeBitmapMemoryCache(Constant.KEY_CACHE_BITMAP_CROPPED);
                 App.getInstance().saveBitmapToMemoryCache(Constant.KEY_CACHE_BITMAP_CROPPED, bitmapCrop);
                 Intent intent = new Intent(this, EditActivity.class);
                 startActivity(intent);
+                finish();
                 break;
         }
     }

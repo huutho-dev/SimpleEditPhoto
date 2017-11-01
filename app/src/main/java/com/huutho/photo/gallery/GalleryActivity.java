@@ -78,7 +78,7 @@ public class GalleryActivity extends MvpAppCompatActivity implements GalleryView
         updateToolbar(R.string.gallery, R.drawable.ic_back, album.mName);
         mFragmentManager
                 .beginTransaction()
-                .setCustomAnimations(R.anim.enter, R.anim.exit, R.anim.pop_enter, R.anim.pop_exit)
+                .setCustomAnimations(R.anim.hozirontal_enter, R.anim.horizontal_exit, R.anim.horizontal_pop_enter, R.anim.horizontal_pop_exit)
                 .replace(R.id.gallery_container, GalleryImagesFragment.newInstance(album.mImages))
                 .addToBackStack(null)
                 .commitAllowingStateLoss();

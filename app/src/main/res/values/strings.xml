@@ -5,4 +5,7 @@
     <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
 
+    <!--EditActivity-->
+    <string name="edit_activity">Edit Photo</string>
+
 </resources>

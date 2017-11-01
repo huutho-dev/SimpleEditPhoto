@@ -78,7 +78,7 @@ public class GalleryAlbumsFragment extends MvpAppCompatFragment implements Galle
     // RecyclerView Item Click
     @Override
     public void onClick(View view, int position, ImageAlbum album) {
-        ((GalleryActivity)getActivity()).openAlbum(album);
+        ((GalleryActivity) getActivity()).openAlbum(album);
     }
 
     @Override
@@ -94,7 +94,6 @@ public class GalleryAlbumsFragment extends MvpAppCompatFragment implements Galle
 
     @Override
     public void fetchImageError() {
-
     }
 
     @Override
