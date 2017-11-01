@@ -24,6 +24,7 @@ import butterknife.ButterKnife;
  */
 
 public class ToolsFragment extends MvpAppCompatFragment implements ToolsView {
+    private static final String TAG = ToolsFragment.class.getSimpleName();
 
     @InjectPresenter
     ToolsPresenter mPresenter;
@@ -57,20 +58,19 @@ public class ToolsFragment extends MvpAppCompatFragment implements ToolsView {
         ((EditActivity) getActivity()).updateToolbar(getString(R.string.edit_activity), R.drawable.ic_close);
     }
 
-
     @Override
     public void setupToolsView(List<Tool> toolData) {
-        ToolsAdapter  mAdapter = new ToolsAdapter();
+        ToolsAdapter mAdapter = new ToolsAdapter();
         mToolsView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         mToolsView.setAdapter(mAdapter);
         mAdapter.setData(toolData);
         mAdapter.setListener(new ToolsAdapter.ToolEventListener() {
             @Override
             public void onClick(View view, int position, Tool tool) {
-                mPresenter.onToolClick(tool);
+                // fix bug auto call onToolClick when using mPresenter
+                onToolClick(tool);
             }
         });
-
     }
 
     @Override
