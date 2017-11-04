@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="RobotoTextView">
+        <attr name="textStyle" format="enum">
+            <enum name="Medium" value="1"/>
+            <enum name="Bold" value="2"/>
+            <enum name="Italic" value="3"/>
+            <enum name="BoldItalic" value="4"/>
+            <enum name="Regular" value="5"/>
+        </attr>
+        <attr name="drawableLeft" format="reference"/>
+        <attr name="drawableRight" format="reference"/>
+        <attr name="drawableBottom" format="reference"/>
+        <attr name="drawableTop" format="reference"/>
+    </declare-styleable>
+</resources>

@@ -97,7 +97,7 @@ public class EditActivity extends MvpAppCompatActivity implements EditView {
             mFragmentManager
                     .beginTransaction()
                     .setCustomAnimations(R.anim.vertical_enter, R.anim.vertical_exit, R.anim.vertical_pop_enter, R.anim.vertical_pop_exit)
-                    .replace(R.id.frame_filter, tool.child)
+                    .replace(R.id.adjust_container, tool.child)
                     .addToBackStack(null)
                     .commitAllowingStateLoss();
         }

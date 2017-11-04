@@ -4,6 +4,25 @@
     <color name="colorPrimaryDark">#455A64</color>
     <color name="colorAccent">#A5D6A7</color>
 
+    <!--// LightBackground-->
+    <color name="colorTextDarkPrimary">#de000000</color>
+    <color name="colorTextDarkSecondary">#8a000000</color>
+    <color name="colorTextDarkHint">#61000000</color>
+    <color name="colorTextDarkDisabled">@color/colorTextDarkHint</color>
+    <color name="colorTextDarkDivider">#1f000000</color>
+    <color name="colorDarkIconActive">#8a000000</color>
+    <color name="colorDarkIconInactive">#61000000</color>
+
+    <!--DarkBackground-->
+    <color name="colorTextLightSecondary">#ffffff</color>
+    <color name="colorTextLightPrimary">#b3ffffff</color>
+    <color name="colorTextLightHint">#80ffffff</color>
+    <color name="colorTextLightDisabled">@color/colorTextLightHint</color>
+    <color name="colorTextLightDivider">#1fffffff</color>
+    <color name="colorLightIconActive">#ffffff</color>
+    <color name="colorLightIconInactive">#80ffffff</color>
+
+
     <color name="white">#ffffff</color>
 
     <!--CropView-->
