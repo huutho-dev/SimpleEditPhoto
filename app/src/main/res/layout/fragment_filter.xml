@@ -1,12 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
+                android:background="#6b5555"
                 android:layout_height="match_parent">
+
+
+    <org.wysaid.view.ImageGLSurfaceView
+        android:id="@+id/image_filter"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/rv_filters"/>
+
+    <com.huutho.photo.NegativeSeekBar
+        android:layout_above="@+id/rv_filters"
+        android:padding="16dp"
+        android:id="@+id/seek_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_filters"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="96dp"
+        android:layout_alignParentBottom="true"
         android:orientation="horizontal"/>
 
 </RelativeLayout>

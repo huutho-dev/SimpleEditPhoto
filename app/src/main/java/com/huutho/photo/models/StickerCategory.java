@@ -8,11 +8,11 @@ import java.util.List;
 
 public class StickerCategory {
 
-    public int iconCat;
+    public String iconCat;
 
     public List<Sticker> mStickers;
 
-    public StickerCategory(int iconCat, List<Sticker> stickers) {
+    public StickerCategory(String iconCat, List<Sticker> stickers) {
         this.iconCat = iconCat;
         mStickers = stickers;
     }

@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
 import com.huutho.photo.R;
 import com.huutho.photo.models.Frame;
 
@@ -37,7 +38,7 @@ public class FrameItem extends LinearLayout {
 
     public void setData(Frame frame) {
         mFrame = frame;
-        mImageView.setImageResource(frame.mFrame);
+        Glide.with(getContext()).load(frame.mDescription).into(mImageView);
     }
 
     public Frame getData() {

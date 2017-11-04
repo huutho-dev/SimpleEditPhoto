@@ -54,4 +54,7 @@ dependencies {
     // Simple Crop Image
     compile 'com.isseiaoki:simplecropview:1.1.6'
 
+    // GPU Image Plus
+    compile 'org.wysaid:gpuimage-plus:2.4.10'
+
 }

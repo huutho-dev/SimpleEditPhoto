@@ -4,6 +4,7 @@ import com.huutho.photo.di.module.EditorModule;
 import com.huutho.photo.edit.fragment.ToolsPresenter;
 import com.huutho.photo.edit.fragment.adjust.AdjustPresenter;
 import com.huutho.photo.edit.fragment.drawing.DrawingPresenter;
+import com.huutho.photo.edit.fragment.filter.FilterFragment;
 import com.huutho.photo.edit.fragment.frame.FramePresenter;
 import com.huutho.photo.edit.fragment.overlay.OverlayPresenter;
 import com.huutho.photo.edit.fragment.sticker.StickerPresenter;
@@ -29,4 +30,5 @@ public interface EditorComponent {
 
     void inject(OverlayPresenter presenter);
 
+    void inject(FilterFragment fragment);
 }

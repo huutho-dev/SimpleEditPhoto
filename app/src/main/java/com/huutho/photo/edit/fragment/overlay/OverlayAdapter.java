@@ -55,12 +55,12 @@ public class OverlayAdapter extends RecyclerView.Adapter<OverlayAdapter.ViewHold
                 .load(mOverlayList.get(holder.getAdapterPosition()).mPathImageOverlay)
                 .into(holder.mImageView);
 
-        LogUtils.e(TAG,"path: "+mOverlayList.get(position).mPathImageOverlay);
+        LogUtils.e(TAG, "path: " + mOverlayList.get(position).mPathImageOverlay);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onClick(v,position,mOverlayList.get(position));
+                mListener.onClick(v, position, mOverlayList.get(position));
             }
         });
     }

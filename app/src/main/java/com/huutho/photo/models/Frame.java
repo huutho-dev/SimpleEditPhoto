@@ -5,9 +5,11 @@ package com.huutho.photo.models;
  */
 
 public class Frame {
-    public int mFrame;
+    public String mFrame;
+    public String mDescription;
 
-    public Frame(int frame) {
+    public Frame(String frame, String description) {
         mFrame = frame;
+        mDescription = description;
     }
 }

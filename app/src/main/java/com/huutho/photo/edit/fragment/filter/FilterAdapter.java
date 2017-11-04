@@ -1,13 +1,15 @@
 package com.huutho.photo.edit.fragment.filter;
 
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.huutho.photo.R;
 import com.huutho.photo.models.Filter;
+
+import org.wysaid.view.ImageGLSurfaceView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,9 +25,11 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.ViewHolder
 
     private List<Filter> mFilterList;
     private FilterEventListener mListener;
+    private Bitmap mBitmap;
 
-    public FilterAdapter() {
+    public FilterAdapter(Bitmap bitmap) {
         mFilterList = new ArrayList<>();
+        mBitmap = bitmap;
     }
 
     public void setFilterList(List<Filter> filterList) {
@@ -51,6 +55,15 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.ViewHolder
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final Filter filter = mFilterList.get(position);
+        holder.mImvFilter.setDisplayMode(ImageGLSurfaceView.DisplayMode.DISPLAY_ASPECT_FIT);
+        holder.mImvFilter.setSurfaceCreatedCallback(new ImageGLSurfaceView.OnSurfaceCreatedCallback() {
+            @Override
+            public void surfaceCreated() {
+                holder.mImvFilter.setImageBitmap(mBitmap);
+                holder.mImvFilter.setFilterWithConfig(filter.filter);
+            }
+        });
+
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,7 +83,7 @@ public class FilterAdapter extends RecyclerView.Adapter<FilterAdapter.ViewHolder
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.filter)
-        ImageView mImvFilter;
+        ImageGLSurfaceView mImvFilter;
 
         public ViewHolder(View itemView) {
             super(itemView);

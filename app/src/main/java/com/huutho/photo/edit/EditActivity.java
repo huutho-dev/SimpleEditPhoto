@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
@@ -35,6 +36,11 @@ public class EditActivity extends MvpAppCompatActivity implements EditView {
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
+    @BindView(R.id.adjust_container)
+    FrameLayout mAdjustContainer;
+
+    private Bitmap mBitmap;
+
 
     private FragmentManager mFragmentManager;
 
@@ -54,10 +60,10 @@ public class EditActivity extends MvpAppCompatActivity implements EditView {
             }
         });
 
-        Bitmap bitmap = App.getInstance()
+        mBitmap = App.getInstance()
                 .getBitmapFromMemoryCache(Constant.KEY_CACHE_BITMAP_CROPPED);
 
-        mImageView.setImageBitmap(bitmap);
+        mImageView.setImageBitmap(mBitmap);
 
         mFragmentManager = getSupportFragmentManager();
         getSupportFragmentManager()
@@ -79,12 +85,22 @@ public class EditActivity extends MvpAppCompatActivity implements EditView {
     @Override
     public void openTool(Tool tool) {
         updateToolbar(tool.name, R.drawable.ic_back);
-        mFragmentManager
-                .beginTransaction()
-                .setCustomAnimations(R.anim.vertical_enter, R.anim.vertical_exit, R.anim.vertical_pop_enter, R.anim.vertical_pop_exit)
-                .replace(R.id.bottom_container, tool.child)
-                .addToBackStack(null)
-                .commitAllowingStateLoss();
+
+        if (!tool.name.equals("Filters")){
+            mFragmentManager
+                    .beginTransaction()
+                    .setCustomAnimations(R.anim.vertical_enter, R.anim.vertical_exit, R.anim.vertical_pop_enter, R.anim.vertical_pop_exit)
+                    .replace(R.id.bottom_container, tool.child)
+                    .addToBackStack(null)
+                    .commitAllowingStateLoss();
+        }else {
+            mFragmentManager
+                    .beginTransaction()
+                    .setCustomAnimations(R.anim.vertical_enter, R.anim.vertical_exit, R.anim.vertical_pop_enter, R.anim.vertical_pop_exit)
+                    .replace(R.id.frame_filter, tool.child)
+                    .addToBackStack(null)
+                    .commitAllowingStateLoss();
+        }
     }
 
     @Override
@@ -96,6 +112,9 @@ public class EditActivity extends MvpAppCompatActivity implements EditView {
         } else {
             finish();
         }
+    }
 
+    public FrameLayout getAdjustContainer(){
+        return mAdjustContainer;
     }
 }

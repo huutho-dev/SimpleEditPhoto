@@ -6,9 +6,9 @@ package com.huutho.photo.models;
 
 public class Sticker {
 
-    public int mStickerRes;
+    public String mStickerRes;
 
-    public Sticker(int stickerRes) {
+    public Sticker(String stickerRes) {
         this.mStickerRes = stickerRes;
     }
 }

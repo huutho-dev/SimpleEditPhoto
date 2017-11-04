@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
 import com.huutho.photo.R;
 import com.huutho.photo.models.StickerCategory;
 
@@ -37,7 +38,7 @@ public class StickerCatItem extends LinearLayout {
 
     public void setData(StickerCategory stickerCategory) {
         mStickerCategory = stickerCategory;
-        mImageView.setImageResource(stickerCategory.iconCat);
+        Glide.with(getContext()).load(stickerCategory.iconCat).into(mImageView);
     }
 
     public StickerCategory getData() {

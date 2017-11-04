@@ -11,5 +11,8 @@ import com.arellomobile.mvp.MvpPresenter;
 public class FilterPresenter extends MvpPresenter<FilterView> {
 
     public FilterPresenter(){
+
+        getViewState().setupFilter();
+
     }
 }
