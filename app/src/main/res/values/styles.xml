@@ -10,6 +10,15 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <!--MainActivity-->
+    <style name="FuntionButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:padding">@dimen/_8dp</item>
+        <item name="android:background">@drawable/bg_round_transparent_buttom</item>
+    </style>
+
+
     <style name="ButtonCrop">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

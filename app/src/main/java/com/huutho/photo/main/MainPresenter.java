@@ -7,12 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.huutho.photo.App;
+import com.huutho.photo.Constant;
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
@@ -25,6 +27,14 @@ import io.reactivex.disposables.Disposable;
 public class MainPresenter extends MvpPresenter<MainView> {
 
     private String mImagePath;
+
+    public MainPresenter() {
+
+        int numberScreen = new Random().nextInt(4) + 1;
+        String pathAssets = Constant.FILE_ASSETS + "main_screen/screen" + numberScreen + ".png";
+        getViewState().setBackGroundImage(pathAssets);
+    }
+
 
     /**
      * Request permission for open camera

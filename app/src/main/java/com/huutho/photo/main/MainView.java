@@ -18,4 +18,10 @@ public interface MainView extends MvpView {
 
     void startEdit(String imagePath);
 
+
+    /**
+     * Set background for Screen
+     * @param pathAssets path image from asssets folder, Using glide to load
+     */
+    void setBackGroundImage(String pathAssets);
 }
