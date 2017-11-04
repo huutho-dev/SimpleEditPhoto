@@ -1,4 +1,4 @@
-package com.huutho.photo.gallery.fragment.albums;
+package com.huutho.photo.gallery.fragment.gallery.albums;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,6 +14,7 @@ import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.huutho.photo.R;
 import com.huutho.photo.gallery.GalleryActivity;
+import com.huutho.photo.models.Image;
 import com.huutho.photo.models.ImageAlbum;
 
 import java.util.List;
@@ -60,7 +61,6 @@ public class GalleryAlbumsFragment extends MvpAppCompatFragment implements Galle
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
-
         mAdapter = new GalleryAlbumsAdapter();
         mAdapter.setListener(this);
         mAlbums.setLayoutManager(new GridLayoutManager(getContext(), SPAN_COUNT));
@@ -78,13 +78,13 @@ public class GalleryAlbumsFragment extends MvpAppCompatFragment implements Galle
     // RecyclerView Item Click
     @Override
     public void onClick(View view, int position, ImageAlbum album) {
-        ((GalleryActivity) getActivity()).openAlbum(album);
+//        ((GalleryActivity) getActivity()).openAlbum(album);
     }
 
     @Override
-    public void fetchImageSuccess(List<ImageAlbum> imageAlbums) {
+    public void fetchImageSuccess(List<ImageAlbum> images) {
         mEmpty.setVisibility(View.GONE);
-        mAdapter.setData(imageAlbums);
+        mAdapter.setData(images);
     }
 
     @Override

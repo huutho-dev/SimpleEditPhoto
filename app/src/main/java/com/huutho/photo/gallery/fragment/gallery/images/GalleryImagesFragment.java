@@ -1,4 +1,4 @@
-package com.huutho.photo.gallery.fragment.images;
+package com.huutho.photo.gallery.fragment.gallery.images;
 
 import android.os.Bundle;
 import android.os.Parcelable;

@@ -1,4 +1,4 @@
-package com.huutho.photo.gallery.fragment.albums;
+package com.huutho.photo.gallery.fragment.gallery.albums;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.huutho.photo.R;
+import com.huutho.photo.models.Image;
 import com.huutho.photo.models.ImageAlbum;
 
 import java.util.ArrayList;
@@ -45,15 +46,15 @@ public class GalleryAlbumsAdapter extends RecyclerView.Adapter<GalleryAlbumsAdap
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new ViewHolder(LayoutInflater
-                .from(parent.getContext())
-                .inflate(R.layout.item_galler_albums, parent, false));
+            return new ViewHolder(LayoutInflater
+                    .from(parent.getContext())
+                    .inflate(R.layout.item_galler_albums, parent, false));
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         final ImageAlbum album = mAlbums.get(position);
-        holder.name.setText(album.mName);
+        holder.name.setText(album.mName + " (" + album.mImages.size() + ")");
         Glide.with(holder.itemView.getContext())
                 .load(album.mImages.get(0).mPath)
                 .into(holder.thumbnail);
@@ -86,8 +87,6 @@ public class GalleryAlbumsAdapter extends RecyclerView.Adapter<GalleryAlbumsAdap
             ButterKnife.bind(this, itemView);
         }
     }
-
-
     //==============================================================================================
 
     public interface AlbumEventListener {

@@ -8,6 +8,7 @@ import android.os.Parcelable;
  */
 
 public class Image implements Parcelable {
+
     public int mId;
     public String mPath;
 
@@ -44,4 +45,5 @@ public class Image implements Parcelable {
             return new Image[size];
         }
     };
+
 }

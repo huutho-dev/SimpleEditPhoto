@@ -3,7 +3,9 @@ package com.huutho.photo.gallery;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
@@ -11,10 +13,7 @@ import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.huutho.photo.R;
 import com.huutho.photo.crop.CropActivity;
-import com.huutho.photo.gallery.fragment.albums.GalleryAlbumsFragment;
-import com.huutho.photo.gallery.fragment.images.GalleryImagesFragment;
 import com.huutho.photo.models.Image;
-import com.huutho.photo.models.ImageAlbum;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,6 +31,12 @@ public class GalleryActivity extends MvpAppCompatActivity implements GalleryView
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
 
+    @BindView(R.id.tabs)
+    TabLayout mTabLayout;
+
+    @BindView(R.id.viewpager)
+    ViewPager mViewPager;
+
     private FragmentManager mFragmentManager;
 
     @Override
@@ -40,22 +45,50 @@ public class GalleryActivity extends MvpAppCompatActivity implements GalleryView
         setContentView(R.layout.activity_gallery);
         ButterKnife.bind(this);
 
+        mFragmentManager = getSupportFragmentManager();
+//        mFragmentManager
+//                .beginTransaction()
+//                .replace(R.id.gallery_container, GalleryAlbumsFragment.newInstance())
+//                .commitAllowingStateLoss();
+
+    }
+
+    @Override
+    public void setUpToolbar() {
         setSupportActionBar(mToolbar);
         mToolbar.setTitleTextColor(Color.WHITE);
         mToolbar.setSubtitleTextColor(Color.LTGRAY);
-        updateToolbar(R.string.gallery, R.drawable.ic_close, "");
+        mToolbar.setNavigationIcon(R.drawable.ic_back);
+        updateToolbar(R.string.gallery, "");
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onBackPressed();
             }
         });
+    }
 
-        mFragmentManager = getSupportFragmentManager();
-        mFragmentManager
-                .beginTransaction()
-                .replace(R.id.gallery_container, GalleryAlbumsFragment.newInstance())
-                .commitAllowingStateLoss();
+    @Override
+    public void setupPagerAndTab() {
+        TabPagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager());
+        mViewPager.setAdapter(adapter);
+        mTabLayout.setupWithViewPager(mViewPager);
+        adapter.setIconTab(mTabLayout);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
 
     }
 
@@ -63,7 +96,7 @@ public class GalleryActivity extends MvpAppCompatActivity implements GalleryView
     public void onBackPressed() {
         if (mFragmentManager.getBackStackEntryCount() == 1) {
             mFragmentManager.popBackStack();
-            updateToolbar(R.string.gallery, R.drawable.ic_close, "");
+            updateToolbar(R.string.gallery, "");
         } else {
             finish();
         }
@@ -74,19 +107,18 @@ public class GalleryActivity extends MvpAppCompatActivity implements GalleryView
      *
      * @param album album clicked
      */
-    public void openAlbum(ImageAlbum album) {
-        updateToolbar(R.string.gallery, R.drawable.ic_back, album.mName);
-        mFragmentManager
-                .beginTransaction()
-                .setCustomAnimations(R.anim.hozirontal_enter, R.anim.horizontal_exit, R.anim.horizontal_pop_enter, R.anim.horizontal_pop_exit)
-                .replace(R.id.gallery_container, GalleryImagesFragment.newInstance(album.mImages))
-                .addToBackStack(null)
-                .commitAllowingStateLoss();
-    }
+//    public void openAlbum(ImageAlbum album) {
+//        updateToolbar(R.string.gallery, album.mName);
+////        mFragmentManager
+////                .beginTransaction()
+////                .setCustomAnimations(R.anim.hozirontal_enter, R.anim.horizontal_exit, R.anim.horizontal_pop_enter, R.anim.horizontal_pop_exit)
+////                .replace(R.id.gallery_container, GalleryImagesFragment.newInstance(album.mImages))
+////                .addToBackStack(null)
+////                .commitAllowingStateLoss();
+//    }
 
-    private void updateToolbar(int title, int icon, String subTitle) {
+    private void updateToolbar(int title, String subTitle) {
         mToolbar.setTitle(title);
-        mToolbar.setNavigationIcon(icon);
         mToolbar.setSubtitle(subTitle);
     }
 
@@ -101,4 +133,6 @@ public class GalleryActivity extends MvpAppCompatActivity implements GalleryView
         intent.putExtra(CropActivity.EXTRA_IMAGE_PATH, image.mPath);
         startActivity(intent);
     }
+
+
 }

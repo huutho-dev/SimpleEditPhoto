@@ -1,6 +1,7 @@
-package com.huutho.photo.gallery.fragment.albums;
+package com.huutho.photo.gallery.fragment.gallery.albums;
 
 import com.arellomobile.mvp.MvpView;
+import com.huutho.photo.models.Image;
 import com.huutho.photo.models.ImageAlbum;
 
 import java.util.List;

@@ -10,6 +10,14 @@
         <item name="windowNoTitle">true</item>
     </style>
 
+    <style name="TabIconStyle" parent="Widget.Design.TabLayout">
+        <item name="tabTextAppearance">@style/TextAppearanceTab</item>
+    </style>
+
+    <style name="TextAppearanceTab" parent="TextAppearance.Design.Tab">
+        <item name="textAllCaps">false</item>
+    </style>
+
     <!--MainActivity-->
     <style name="FuntionButton">
         <item name="android:layout_width">wrap_content</item>

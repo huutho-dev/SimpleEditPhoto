@@ -9,4 +9,9 @@ import com.arellomobile.mvp.MvpPresenter;
 
 @InjectViewState
 public class GalleryPresenter extends MvpPresenter<GalleryView> {
+
+    public GalleryPresenter(){
+        getViewState().setUpToolbar();
+        getViewState().setupPagerAndTab();
+    }
 }
