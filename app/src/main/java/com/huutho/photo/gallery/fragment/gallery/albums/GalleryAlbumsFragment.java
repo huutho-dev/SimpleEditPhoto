@@ -14,7 +14,7 @@ import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.huutho.photo.R;
 import com.huutho.photo.gallery.GalleryActivity;
-import com.huutho.photo.models.Image;
+import com.huutho.photo.gallery.fragment.gallery.images.GalleryImagesFragment;
 import com.huutho.photo.models.ImageAlbum;
 
 import java.util.List;
@@ -65,20 +65,15 @@ public class GalleryAlbumsFragment extends MvpAppCompatFragment implements Galle
         mAdapter.setListener(this);
         mAlbums.setLayoutManager(new GridLayoutManager(getContext(), SPAN_COUNT));
         mAlbums.setAdapter(mAdapter);
-    }
 
-    @Override
-    public void onResume() {
-        super.onResume();
         mPresenter.fetchAlbums();
         mLoading.setVisibility(View.VISIBLE);
     }
 
-
     // RecyclerView Item Click
     @Override
     public void onClick(View view, int position, ImageAlbum album) {
-//        ((GalleryActivity) getActivity()).openAlbum(album);
+        ((GalleryActivity)getActivity()).openAlbum(album);
     }
 
     @Override

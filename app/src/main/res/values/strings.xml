@@ -8,4 +8,6 @@
     <!--EditActivity-->
     <string name="edit_activity">Edit Photo</string>
 
+    <string name="preview_activity">Preview Photo</string>
+
 </resources>

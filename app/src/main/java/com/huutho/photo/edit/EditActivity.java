@@ -18,6 +18,8 @@ import com.huutho.photo.R;
 import com.huutho.photo.edit.fragment.ToolsFragment;
 import com.huutho.photo.models.Tool;
 
+import org.wysaid.view.ImageGLSurfaceView;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -31,7 +33,7 @@ public class EditActivity extends MvpAppCompatActivity implements EditView {
     EditPresenter mPresenter;
 
     @BindView(R.id.image)
-    ImageView mImageView;
+    ImageGLSurfaceView mImageView;
 
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
@@ -77,23 +79,20 @@ public class EditActivity extends MvpAppCompatActivity implements EditView {
         mToolbar.setNavigationIcon(icon);
     }
 
-    public ImageView getImageEditor() {
-        return mImageView;
-    }
 
     // Call when tool click on ToolsFragment.class
     @Override
     public void openTool(Tool tool) {
         updateToolbar(tool.name, R.drawable.ic_back);
 
-        if (!tool.name.equals("Filters")){
+        if (!tool.name.equals("Filters")) {
             mFragmentManager
                     .beginTransaction()
                     .setCustomAnimations(R.anim.vertical_enter, R.anim.vertical_exit, R.anim.vertical_pop_enter, R.anim.vertical_pop_exit)
                     .replace(R.id.bottom_container, tool.child)
                     .addToBackStack(null)
                     .commitAllowingStateLoss();
-        }else {
+        } else {
             mFragmentManager
                     .beginTransaction()
                     .setCustomAnimations(R.anim.vertical_enter, R.anim.vertical_exit, R.anim.vertical_pop_enter, R.anim.vertical_pop_exit)
@@ -114,7 +113,7 @@ public class EditActivity extends MvpAppCompatActivity implements EditView {
         }
     }
 
-    public FrameLayout getAdjustContainer(){
+    public FrameLayout getAdjustContainer() {
         return mAdjustContainer;
     }
 }

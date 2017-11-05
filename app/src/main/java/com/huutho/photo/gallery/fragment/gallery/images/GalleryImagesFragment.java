@@ -6,13 +6,18 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 
 import com.huutho.photo.R;
 import com.huutho.photo.gallery.GalleryActivity;
 import com.huutho.photo.models.Image;
+import com.huutho.photo.models.ImageAlbum;
+import com.huutho.photo.preview.PreviewActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,15 +34,19 @@ public class GalleryImagesFragment extends Fragment implements GalleryImagesAdap
     private static final int SPAN_COUNT = 3;
     public static final String EXTRA_IMAGE_ALBUM = "EXTRA_IMAGE_ALBUM";
 
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
     @BindView(R.id.gallery_images)
     RecyclerView mGalleryImage;
 
     private GalleryImagesAdapter mAdapter;
 
+    private ImageAlbum mImageAlbum;
 
-    public static GalleryImagesFragment newInstance(List<Image> images) {
+    public static GalleryImagesFragment newInstance(ImageAlbum album) {
         Bundle args = new Bundle();
-        args.putParcelableArrayList(EXTRA_IMAGE_ALBUM, (ArrayList<? extends Parcelable>) images);
+        args.putParcelable(EXTRA_IMAGE_ALBUM, album);
         GalleryImagesFragment fragment = new GalleryImagesFragment();
         fragment.setArguments(args);
         return fragment;
@@ -55,21 +64,29 @@ public class GalleryImagesFragment extends Fragment implements GalleryImagesAdap
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
+        mImageAlbum = getArguments().getParcelable(EXTRA_IMAGE_ALBUM);
+        mToolbar.setNavigationIcon(R.drawable.ic_back);
+        mToolbar.setTitle(mImageAlbum.mName);
+
+        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().onBackPressed();
+            }
+        });
+
         mAdapter = new GalleryImagesAdapter();
         mAdapter.setListener(this);
         mGalleryImage.setLayoutManager(new GridLayoutManager(getContext(), SPAN_COUNT));
+        mGalleryImage.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(getContext(),R.anim.recyclerview_layout_animation_fall_down));
         mGalleryImage.setAdapter(mAdapter);
-    }
+        if (mImageAlbum != null)
+            mAdapter.setData(mImageAlbum.mImages);
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        List<Image> listImage = getArguments().getParcelableArrayList(EXTRA_IMAGE_ALBUM);
-        mAdapter.setData(listImage);
     }
 
     @Override
     public void onClick(View view, int position, Image image) {
-        ((GalleryActivity)getActivity()).startEdit(image);
+        PreviewActivity.startActivity(getContext(), mImageAlbum.mImages, position);
     }
 }

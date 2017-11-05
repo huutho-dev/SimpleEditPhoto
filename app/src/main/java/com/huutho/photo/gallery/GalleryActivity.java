@@ -13,7 +13,9 @@ import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.huutho.photo.R;
 import com.huutho.photo.crop.CropActivity;
+import com.huutho.photo.gallery.fragment.gallery.images.GalleryImagesFragment;
 import com.huutho.photo.models.Image;
+import com.huutho.photo.models.ImageAlbum;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -94,7 +96,7 @@ public class GalleryActivity extends MvpAppCompatActivity implements GalleryView
 
     @Override
     public void onBackPressed() {
-        if (mFragmentManager.getBackStackEntryCount() == 1) {
+        if (mFragmentManager.getBackStackEntryCount() > 0) {
             mFragmentManager.popBackStack();
             updateToolbar(R.string.gallery, "");
         } else {
@@ -107,32 +109,17 @@ public class GalleryActivity extends MvpAppCompatActivity implements GalleryView
      *
      * @param album album clicked
      */
-//    public void openAlbum(ImageAlbum album) {
-//        updateToolbar(R.string.gallery, album.mName);
-////        mFragmentManager
-////                .beginTransaction()
-////                .setCustomAnimations(R.anim.hozirontal_enter, R.anim.horizontal_exit, R.anim.horizontal_pop_enter, R.anim.horizontal_pop_exit)
-////                .replace(R.id.gallery_container, GalleryImagesFragment.newInstance(album.mImages))
-////                .addToBackStack(null)
-////                .commitAllowingStateLoss();
-//    }
+    public void openAlbum(ImageAlbum album) {
+        updateToolbar(R.string.gallery, album.mName);
+        mFragmentManager
+                .beginTransaction()
+                .replace(R.id.root, GalleryImagesFragment.newInstance(album))
+                .addToBackStack("ádasd")
+                .commitAllowingStateLoss();
+    }
 
     private void updateToolbar(int title, String subTitle) {
         mToolbar.setTitle(title);
         mToolbar.setSubtitle(subTitle);
     }
-
-    /**
-     * Call when click image in gallery
-     *
-     * @param image
-     */
-    public void startEdit(Image image) {
-        finish();
-        Intent intent = new Intent(this, CropActivity.class);
-        intent.putExtra(CropActivity.EXTRA_IMAGE_PATH, image.mPath);
-        startActivity(intent);
-    }
-
-
 }

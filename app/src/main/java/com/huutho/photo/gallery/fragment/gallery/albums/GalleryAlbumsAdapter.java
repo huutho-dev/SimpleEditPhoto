@@ -63,7 +63,7 @@ public class GalleryAlbumsAdapter extends RecyclerView.Adapter<GalleryAlbumsAdap
             @Override
             public void onClick(View v) {
                 if (mListener != null) {
-                    mListener.onClick(v, holder.getAdapterPosition(), album);
+                    mListener.onClick(holder.thumbnail, holder.getAdapterPosition(), album);
                 }
             }
         });

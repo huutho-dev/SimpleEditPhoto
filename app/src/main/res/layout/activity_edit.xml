@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-                android:background="#ededed"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#ededed">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -13,26 +13,26 @@
 
     </android.support.v7.widget.Toolbar>
 
-    <ImageView
-        android:padding="8dp"
+    <org.wysaid.view.ImageGLSurfaceView
         android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/adjust_container"
-        android:layout_below="@+id/toolbar" />
+        android:layout_below="@+id/toolbar"
+        android:padding="8dp" />
 
     <FrameLayout
         android:id="@+id/adjust_container"
-        android:background="@color/colorPrimary"
-        android:layout_above="@+id/bottom_container"
         android:layout_width="match_parent"
-        android:layout_height="48dp"/>
+        android:layout_height="48dp"
+        android:layout_above="@+id/bottom_container"
+        android:background="@color/colorPrimary" />
 
     <View
-        android:layout_above="@+id/bottom_container"
         android:layout_width="match_parent"
         android:layout_height="1px"
-        android:background="@color/white"/>
+        android:layout_above="@+id/bottom_container"
+        android:background="@color/white" />
 
     <FrameLayout
         android:id="@+id/bottom_container"

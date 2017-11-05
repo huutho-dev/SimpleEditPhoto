@@ -1,9 +1,11 @@
 package com.huutho.photo.crop;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Matrix;
 import android.os.Bundle;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.view.View;
 
 import com.arellomobile.mvp.MvpAppCompatActivity;
@@ -37,6 +39,12 @@ public class CropActivity extends MvpAppCompatActivity implements CropView {
 
     private Bitmap mBitmap;
 
+
+    public static void newInstance(Context context, String path) {
+      Intent intent = new Intent(context, CropActivity.class);
+      intent.putExtra(EXTRA_IMAGE_PATH, path);
+      context.startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
