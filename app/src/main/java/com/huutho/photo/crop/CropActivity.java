@@ -41,9 +41,9 @@ public class CropActivity extends MvpAppCompatActivity implements CropView {
 
 
     public static void newInstance(Context context, String path) {
-      Intent intent = new Intent(context, CropActivity.class);
-      intent.putExtra(EXTRA_IMAGE_PATH, path);
-      context.startActivity(intent);
+        Intent intent = new Intent(context, CropActivity.class);
+        intent.putExtra(EXTRA_IMAGE_PATH, path);
+        context.startActivity(intent);
     }
 
     @Override

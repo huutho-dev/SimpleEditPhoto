@@ -9,4 +9,14 @@ import com.arellomobile.mvp.MvpPresenter;
 
 @InjectViewState
 public class EditPresenter extends MvpPresenter<EditView> {
+
+    public EditPresenter(){
+
+        getViewState().getBitmapFromPath();
+
+        getViewState().setupToolbar();
+
+        getViewState().getBitmapFromPath();
+    }
+
 }

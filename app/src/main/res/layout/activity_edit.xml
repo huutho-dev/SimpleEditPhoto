@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ededed">
+    android:background="@color/white">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -24,9 +24,9 @@
     <FrameLayout
         android:id="@+id/adjust_container"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/_48dp"
         android:layout_above="@+id/bottom_container"
-        android:background="@color/colorPrimary" />
+        android:background="@color/white" />
 
     <View
         android:layout_width="match_parent"
@@ -37,7 +37,7 @@
     <FrameLayout
         android:id="@+id/bottom_container"
         android:layout_width="match_parent"
-        android:layout_height="64dp"
+        android:layout_height="@dimen/_56dp"
         android:layout_alignParentBottom="true"
         android:background="@color/colorPrimaryDark" />
 </RelativeLayout>

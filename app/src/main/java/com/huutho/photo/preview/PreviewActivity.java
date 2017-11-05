@@ -14,6 +14,7 @@ import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.huutho.photo.R;
 import com.huutho.photo.crop.CropActivity;
+import com.huutho.photo.edit.EditActivity;
 import com.huutho.photo.models.Image;
 
 import java.util.ArrayList;
@@ -96,9 +97,9 @@ public class PreviewActivity extends MvpAppCompatActivity implements PreviewView
             case R.id.imv_delete:
                 break;
             case R.id.imv_filter:
-                int currentItem = mViewpager.getCurrentItem();
-                Image image = mImages.get(currentItem);
-                CropActivity.newInstance(this,image.mPath);
+                Image image = mImages.get(mViewpager.getCurrentItem());
+                EditActivity.newInstance(this,image.mPath);
+                finish();
                 break;
             case R.id.imv_share:
                 break;
