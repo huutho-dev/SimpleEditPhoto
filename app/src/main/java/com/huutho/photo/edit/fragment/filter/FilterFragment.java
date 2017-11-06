@@ -14,8 +14,8 @@ import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.huutho.photo.App;
 import com.huutho.photo.Constant;
-import com.huutho.photo.NegativeSeekBar;
 import com.huutho.photo.R;
+import com.huutho.photo.custom.NegativeSeekBar;
 import com.huutho.photo.models.Filter;
 
 import org.wysaid.view.ImageGLSurfaceView;

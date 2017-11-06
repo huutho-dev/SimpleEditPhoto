@@ -1,14 +1,13 @@
-package com.huutho.photo;
+package com.huutho.photo.custom;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.SeekBar;
 
 /**
- * Created by ThoNh on 11/3/2017.
+ * Created by HeWhoWas on 5/10/13.
  */
-
-public class NegativeSeekBar extends android.support.v7.widget.AppCompatSeekBar  {
+public class NegativeSeekBar extends SeekBar {
 
     protected int minimumValue = 0;
     protected int maximumValue = 0;
@@ -32,11 +31,13 @@ public class NegativeSeekBar extends android.support.v7.widget.AppCompatSeekBar 
     public void setMin(int min){
         this.minimumValue = min;
         super.setMax(maximumValue - minimumValue);
+        invalidate();
     }
 
     public void setMax(int max){
         this.maximumValue = max;
         super.setMax(maximumValue - minimumValue);
+        invalidate();
     }
 
     @Override

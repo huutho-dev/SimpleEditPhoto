@@ -10,7 +10,7 @@ import java.util.List;
  */
 
 public interface AdjustView extends MvpView {
-    void setupAdjustView(List<Adjust> adjustList);
+    void setupAdjustView(List<Adjust> adjustList, String config);
 
     void onAdjustClick(Adjust adjust);
 }
