@@ -5,6 +5,7 @@
               android:layout_gravity="center"
               android:layout_marginLeft="16dp"
               android:layout_marginRight="16dp"
+              android:maxWidth="60dp"
               android:gravity="center_vertical"
               android:orientation="vertical">
 
@@ -16,13 +17,13 @@
         android:src="@mipmap/ic_launcher"/>
 
     <TextView
+        android:layout_marginTop="@dimen/_4dp"
         android:id="@+id/tv_tool_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:text="Name"
-        android:textColor="@color/white"
-        android:textSize="12sp"
-        android:textStyle="bold"/>
+        android:textColor="@color/colorTextDarkSecondary"
+        android:textSize="12sp"/>
 
 </LinearLayout>

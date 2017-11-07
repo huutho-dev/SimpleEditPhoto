@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+
+    <ImageView
+
+        android:id="@+id/rotate_image"
+        android:layout_width="@dimen/_40dp"
+        android:layout_height="@dimen/_40dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="@dimen/_8dp"
+        android:layout_marginRight="@dimen/_8dp"
+        android:padding="@dimen/_4dp"
+        android:src="@drawable/icon_rotate_left_and_right"/>
+
+    <TextView
+        android:id="@+id/rotate_name"
+        android:layout_width="80dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rotate_image"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:layout_marginTop="2dp"
+        android:gravity="center"
+        android:lines="2"
+        android:textSize="8sp"/>
+
+</RelativeLayout>

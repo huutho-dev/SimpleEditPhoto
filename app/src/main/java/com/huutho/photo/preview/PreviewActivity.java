@@ -2,7 +2,6 @@ package com.huutho.photo.preview;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v4.app.ActivityCompat;
@@ -13,7 +12,6 @@ import android.view.View;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.huutho.photo.R;
-import com.huutho.photo.crop.CropActivity;
 import com.huutho.photo.edit.EditActivity;
 import com.huutho.photo.models.Image;
 
@@ -59,7 +57,6 @@ public class PreviewActivity extends MvpAppCompatActivity implements PreviewView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preview);
         ButterKnife.bind(this);
-
     }
 
     @Override

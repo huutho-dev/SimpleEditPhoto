@@ -1,26 +1,20 @@
 package com.huutho.photo.gallery.fragment.gallery.images;
 
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
 
 import com.huutho.photo.R;
-import com.huutho.photo.gallery.GalleryActivity;
 import com.huutho.photo.models.Image;
 import com.huutho.photo.models.ImageAlbum;
 import com.huutho.photo.preview.PreviewActivity;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -65,7 +59,6 @@ public class GalleryImagesFragment extends Fragment implements GalleryImagesAdap
         ButterKnife.bind(this, view);
 
         mImageAlbum = getArguments().getParcelable(EXTRA_IMAGE_ALBUM);
-        mToolbar.setNavigationIcon(R.drawable.ic_back);
         mToolbar.setTitle(mImageAlbum.mName);
 
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {

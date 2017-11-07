@@ -8,6 +8,15 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+
+        <item name="android:fontFamily">@font/roboto_mono_thin</item>
+        <item name="android:textViewStyle">@style/TextViewRoboto</item>
+        <item name="android:buttonStyle">@style/TextViewRoboto</item>
+        <item name="android:editTextStyle">@style/TextViewRoboto</item>
+    </style>
+
+    <style name="TextViewRoboto" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/roboto_mono_thin</item>
     </style>
 
     <style name="TabIconStyle" parent="Widget.Design.TabLayout">

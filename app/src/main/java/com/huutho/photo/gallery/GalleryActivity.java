@@ -1,7 +1,5 @@
 package com.huutho.photo.gallery;
 
-import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
@@ -12,9 +10,7 @@ import android.view.View;
 import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.huutho.photo.R;
-import com.huutho.photo.crop.CropActivity;
 import com.huutho.photo.gallery.fragment.gallery.images.GalleryImagesFragment;
-import com.huutho.photo.models.Image;
 import com.huutho.photo.models.ImageAlbum;
 
 import butterknife.BindView;
@@ -46,21 +42,12 @@ public class GalleryActivity extends MvpAppCompatActivity implements GalleryView
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
         ButterKnife.bind(this);
-
         mFragmentManager = getSupportFragmentManager();
-//        mFragmentManager
-//                .beginTransaction()
-//                .replace(R.id.gallery_container, GalleryAlbumsFragment.newInstance())
-//                .commitAllowingStateLoss();
-
     }
 
     @Override
     public void setUpToolbar() {
         setSupportActionBar(mToolbar);
-        mToolbar.setTitleTextColor(Color.WHITE);
-        mToolbar.setSubtitleTextColor(Color.LTGRAY);
-        mToolbar.setNavigationIcon(R.drawable.ic_back);
         updateToolbar(R.string.gallery, "");
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

@@ -3,7 +3,6 @@ package com.huutho.photo.edit;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -92,14 +91,13 @@ public class EditActivity extends MvpAppCompatActivity implements EditView {
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.bottom_container, ToolsFragment.newInstance())
+                .addToBackStack(null)
                 .commitAllowingStateLoss();
     }
 
     @Override
     public void setupToolbar() {
         setSupportActionBar(mToolbar);
-        mToolbar.setTitleTextColor(Color.WHITE);
-        mToolbar.setSubtitleTextColor(Color.LTGRAY);
         mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

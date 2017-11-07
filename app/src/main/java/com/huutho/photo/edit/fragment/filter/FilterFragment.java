@@ -15,7 +15,6 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.huutho.photo.App;
 import com.huutho.photo.Constant;
 import com.huutho.photo.R;
-import com.huutho.photo.custom.NegativeSeekBar;
 import com.huutho.photo.models.Filter;
 
 import org.wysaid.view.ImageGLSurfaceView;
@@ -46,7 +45,7 @@ public class FilterFragment extends MvpAppCompatFragment implements FilterView, 
     ImageGLSurfaceView mImageView;
 
     @BindView(R.id.seek_bar)
-    NegativeSeekBar mSeekBar;
+    SeekBar mSeekBar;
 
     private FilterAdapter mAdapter;
 
@@ -79,10 +78,6 @@ public class FilterFragment extends MvpAppCompatFragment implements FilterView, 
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.bind(this, view);
 
-
-        mSeekBar.setMax(100);
-        mSeekBar.setMin(-100);
-
         mImageView.setDisplayMode(ImageGLSurfaceView.DisplayMode.DISPLAY_ASPECT_FIT);
         mImageView.setSurfaceCreatedCallback(new ImageGLSurfaceView.OnSurfaceCreatedCallback() {
             @Override
@@ -112,11 +107,7 @@ public class FilterFragment extends MvpAppCompatFragment implements FilterView, 
     @Override
     public void setupFilter() {
 
-        int ratio = mBitmap.getHeight() / mBitmap.getWidth();
-        int width = 200;
-        int height = 200 * ratio;
-        Bitmap bitmap = Bitmap.createScaledBitmap(mBitmap, width, height, true);
-        mAdapter = new FilterAdapter(bitmap);
+        mAdapter = new FilterAdapter(mBitmap);
         mAdapter.setListener(this);
         mFiltersView.setLayoutManager(new LinearLayoutManager
                 (getContext(), LinearLayoutManager.HORIZONTAL, false));

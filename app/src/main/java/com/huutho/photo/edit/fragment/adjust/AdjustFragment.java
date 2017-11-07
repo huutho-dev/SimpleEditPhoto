@@ -21,7 +21,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 /**
  * Created by ThoNh on 11/1/2017.
@@ -37,7 +36,6 @@ public class AdjustFragment extends MvpAppCompatFragment implements AdjustView, 
     LinearLayout mAdjustToolLayout;
 
     ImageGLSurfaceView mImageView;
-    Unbinder unbinder;
 
     private String mStringConfig;
 

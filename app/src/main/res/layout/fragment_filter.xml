@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/rv_filters"/>
 
-    <com.huutho.photo.NegativeSeekBar
+    <SeekBar
         android:layout_above="@+id/rv_filters"
         android:padding="16dp"
         android:id="@+id/seek_bar"
