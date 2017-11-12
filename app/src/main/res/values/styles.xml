@@ -8,6 +8,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="colorControlHighlight">@color/colorAccent</item>
 
         <item name="android:fontFamily">@font/roboto_mono_thin</item>
         <item name="android:textViewStyle">@style/TextViewRoboto</item>

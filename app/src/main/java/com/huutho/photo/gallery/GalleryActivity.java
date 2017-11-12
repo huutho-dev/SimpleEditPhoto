@@ -100,8 +100,9 @@ public class GalleryActivity extends MvpAppCompatActivity implements GalleryView
         updateToolbar(R.string.gallery, album.mName);
         mFragmentManager
                 .beginTransaction()
+                .setCustomAnimations(R.anim.hozirontal_enter,R.anim.horizontal_exit,R.anim.horizontal_pop_exit,R.anim.horizontal_pop_exit)
                 .replace(R.id.root, GalleryImagesFragment.newInstance(album))
-                .addToBackStack("ádasd")
+                .addToBackStack(null)
                 .commitAllowingStateLoss();
     }
 

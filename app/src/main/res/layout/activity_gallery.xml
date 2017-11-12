@@ -15,14 +15,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
+            android:elevation="@dimen/_8dp"
             android:fitsSystemWindows="true">
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/toolbar"
-                app:navigationIcon="@drawable/ic_back"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_scrollFlags="scroll|enterAlways"
+                app:navigationIcon="@drawable/ic_back"
                 app:subtitleTextColor="@color/colorTextDarkSecondary"
                 app:titleTextColor="@color/colorTextDarkPrimary"/>
 

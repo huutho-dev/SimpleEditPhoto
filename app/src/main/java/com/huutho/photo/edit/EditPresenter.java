@@ -14,8 +14,6 @@ public class EditPresenter extends MvpPresenter<EditView> {
 
         getViewState().getBitmapFromPath();
 
-        getViewState().setupToolbar();
-
         getViewState().getBitmapFromPath();
     }
 

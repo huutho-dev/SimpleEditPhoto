@@ -4,31 +4,36 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.SeekBar;
 
-import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.huutho.photo.R;
+import com.huutho.photo.base.BaseToolFragment;
 import com.huutho.photo.models.Overlay;
+import com.huutho.photo.utils.LogUtils;
 
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 /**
  * Created by ThoNh on 11/1/2017.
  */
 
-public class OverlayFragment extends MvpAppCompatFragment implements OverlayView {
+public class OverlayFragment extends BaseToolFragment implements OverlayView, SeekBar.OnSeekBarChangeListener {
+    private static final String TAG = OverlayFragment.class.getSimpleName();
 
     @InjectPresenter
     OverlayPresenter mPresenter;
 
     @BindView(R.id.rv_overlay)
     RecyclerView mOverlayView;
+
+    private Overlay mOverlay;
 
     public static OverlayFragment newInstance() {
         Bundle args = new Bundle();
@@ -44,15 +49,27 @@ public class OverlayFragment extends MvpAppCompatFragment implements OverlayView
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
+    public void onSave() {
+        mBitmapManager.appendConfig(mOverlay.getConfig());
+        mImageView.setFilterWithConfig(mBitmapManager.getResultConfig());
+
+        (getActivity()).onBackPressed();
+
+        LogUtils.e(TAG, "config--->" + mOverlay.getConfig() + "\nresult:" + mBitmapManager.getResultConfig());
+    }
+
+    @Override
+    public void onCancel() {
+        mImageView.setFilterWithConfig(mBitmapManager.getResultConfig());
+
+        LogUtils.e(TAG, "config--->" + mOverlay.getConfig() + "\nresult:" + mBitmapManager.getResultConfig());
     }
 
     @Override
     public void setupOverlayView(List<Overlay> overlayList) {
         OverlayAdapter mAdapter = new OverlayAdapter();
-        mOverlayView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        mOverlayView.setLayoutManager(new LinearLayoutManager(getContext(),
+                LinearLayoutManager.HORIZONTAL, false));
         mOverlayView.setAdapter(mAdapter);
         mAdapter.setData(overlayList);
         mAdapter.setListener(new OverlayAdapter.OverlayEventListener() {
@@ -65,6 +82,28 @@ public class OverlayFragment extends MvpAppCompatFragment implements OverlayView
 
     @Override
     public void onOverlayOnClick(Overlay overlay) {
+        if (mContainerSeekbar.getVisibility() == View.INVISIBLE) {
+            mContainerSeekbar.setVisibility(View.VISIBLE);
+        }
 
+        mOverlay = overlay;
+
+        final String config = mOverlay.originConfig();
+        Log.e("ThoNH", "C:" + config);
+        mImageView.post(new Runnable() {
+            @Override
+            public void run() {
+                String c = mBitmapManager.getResultConfig() + config;
+                mImageView.setFilterWithConfig(c);
+                mSeekBar.setProgress(50);
+            }
+        });
+    }
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        super.onProgressChanged(seekBar, progress, fromUser);
+        mOverlay.setIntensity((float)progress/100.0f);
+        mImageView.setFilterIntensity((float) progress/100.0f);
     }
 }

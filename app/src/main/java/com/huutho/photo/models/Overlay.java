@@ -5,9 +5,35 @@ package com.huutho.photo.models;
  */
 
 public class Overlay {
-    public String mPathImageOverlay;
 
-    public Overlay(String pathImageOverlay) {
-        mPathImageOverlay = pathImageOverlay;
+    float fucking = 0.5f;
+
+    private float mIntensity = 90;
+
+    public String nNameOverlay;
+
+    public Overlay(String name) {
+        nNameOverlay = name;
+    }
+
+    public String getConfig() {
+        return "@krblend mix " + nNameOverlay + " " + mIntensity * fucking;
+    }
+
+    public String originConfig (){
+        return "@krblend mix " + nNameOverlay + " "+mIntensity;
+    }
+
+    public void setIntensity(float fuck) {
+        fucking = fuck;
+    }
+
+    @Override
+    public String toString() {
+        return "Overlay{" +
+                "mConfig='" + fucking + '\'' +
+                ", mIntensity='" + mIntensity + '\'' +
+                ", nNameOverlay='" + nNameOverlay + '\'' +
+                '}';
     }
 }

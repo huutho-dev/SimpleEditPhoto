@@ -1,16 +1,22 @@
 package com.huutho.photo.edit.fragment.crop;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.huutho.photo.App;
 import com.huutho.photo.R;
+import com.huutho.photo.base.BaseToolFragment;
+import com.huutho.photo.edit.EditActivity;
 import com.huutho.photo.models.Crop;
+import com.isseiaoki.simplecropview.CropImageView;
+
+import org.wysaid.view.ImageGLSurfaceView;
 
 import java.util.List;
 
@@ -23,12 +29,16 @@ import butterknife.ButterKnife;
  * Created by ThoNh on 11/7/2017.
  */
 
-public class CropFragment extends MvpAppCompatFragment {
+public class CropFragment extends BaseToolFragment {
     @BindView(R.id.crop_container)
     LinearLayout mCropContainer;
 
     @Inject
     List<Crop> mCrops;
+
+    private Bitmap mBitmap;
+    private CropImageView mCropImageView;
+    private ImageGLSurfaceView mImageGLSurfaceView;
 
 
     public static CropFragment newInstance() {
@@ -42,18 +52,28 @@ public class CropFragment extends MvpAppCompatFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         App.editorComponent.inject(this);
+
+        (getActivity())
+                .findViewById(R.id.imv_menu_done)
+                .setOnClickListener(
+                        new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mImageGLSurfaceView.setImageBitmap(mCropImageView.getImageBitmap());
+                            }
+                        });
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_crop,container,false);
+        return inflater.inflate(R.layout.fragment_crop, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this,view);
+        ButterKnife.bind(this, view);
 
         for (int i = 0; i < mCrops.size(); i++) {
             final Crop crop = mCrops.get(i);
@@ -63,13 +83,58 @@ public class CropFragment extends MvpAppCompatFragment {
             mView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    onBlurClick(crop);
+                    onOptionClick(crop);
                 }
             });
         }
     }
 
-    private void onBlurClick(Crop blur) {
+    @Override
+    public void onResume() {
+        super.onResume();
+        mBitmap = ((EditActivity) getActivity()).mBitmap;
+        mCropImageView = ((EditActivity) getActivity()).mCropImageView;
+        mImageGLSurfaceView = ((EditActivity) getActivity()).mImageView;
+
+
+        mCropImageView.setVisibility(View.VISIBLE);
+        mCropImageView.setImageBitmap(mBitmap);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mImageGLSurfaceView.setVisibility(View.GONE);
+
+            }
+        }, 50);
+
+
+    }
+
+    private void onOptionClick(Crop crop) {
+        mCropImageView.setCropMode(crop.mCropMode);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mImageGLSurfaceView.setVisibility(View.VISIBLE);
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mCropImageView.setVisibility(View.GONE);
+            }
+        }, 100);
+
+    }
+
+    @Override
+    public void onSave() {
+        getActivity().onBackPressed();
+        mImageView.setImageBitmap(mBitmap);
+    }
+
+    @Override
+    public void onCancel() {
 
     }
 }

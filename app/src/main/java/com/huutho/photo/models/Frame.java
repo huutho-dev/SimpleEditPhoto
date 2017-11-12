@@ -5,11 +5,16 @@ package com.huutho.photo.models;
  */
 
 public class Frame {
-    public String mFrame;
+    public String mFramePath;
     public String mDescription;
+    public String mConfig;
 
     public Frame(String frame, String description) {
-        mFrame = frame;
+        mFramePath = frame;
         mDescription = description;
+
+        int dashIndex = mFramePath.lastIndexOf("/");
+        String name = mFramePath.substring(dashIndex + 1);
+        mConfig = "@blend mix frame/frame/" + name + " 100 ";
     }
 }

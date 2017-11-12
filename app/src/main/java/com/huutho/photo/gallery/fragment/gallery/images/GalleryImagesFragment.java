@@ -5,11 +5,11 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.TextView;
 
 import com.huutho.photo.R;
 import com.huutho.photo.models.Image;
@@ -18,6 +18,7 @@ import com.huutho.photo.preview.PreviewActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by ThoNh on 10/31/2017.
@@ -28,8 +29,8 @@ public class GalleryImagesFragment extends Fragment implements GalleryImagesAdap
     private static final int SPAN_COUNT = 3;
     public static final String EXTRA_IMAGE_ALBUM = "EXTRA_IMAGE_ALBUM";
 
-    @BindView(R.id.toolbar)
-    Toolbar mToolbar;
+    @BindView(R.id.tv_title_toolbar)
+    TextView mTitleToolbar;
 
     @BindView(R.id.gallery_images)
     RecyclerView mGalleryImage;
@@ -49,7 +50,7 @@ public class GalleryImagesFragment extends Fragment implements GalleryImagesAdap
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_image_gallery, container, false);
+        return  inflater.inflate(R.layout.fragment_image_gallery, container, false);
     }
 
 
@@ -59,27 +60,26 @@ public class GalleryImagesFragment extends Fragment implements GalleryImagesAdap
         ButterKnife.bind(this, view);
 
         mImageAlbum = getArguments().getParcelable(EXTRA_IMAGE_ALBUM);
-        mToolbar.setTitle(mImageAlbum.mName);
-
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity().onBackPressed();
-            }
-        });
+        mTitleToolbar.setText(mImageAlbum.mName);
 
         mAdapter = new GalleryImagesAdapter();
         mAdapter.setListener(this);
         mGalleryImage.setLayoutManager(new GridLayoutManager(getContext(), SPAN_COUNT));
-        mGalleryImage.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(getContext(),R.anim.recyclerview_layout_animation_fall_down));
+        mGalleryImage.setLayoutAnimation(AnimationUtils.loadLayoutAnimation(getContext(), R.anim.recyclerview_layout_animation_fall_down));
         mGalleryImage.setAdapter(mAdapter);
         if (mImageAlbum != null)
             mAdapter.setData(mImageAlbum.mImages);
 
     }
 
+
+    @OnClick(R.id.imv_back)
+    public void onBack(){
+        getActivity().onBackPressed();
+    }
+
     @Override
     public void onClick(View view, int position, Image image) {
-        PreviewActivity.startActivity(getContext(), mImageAlbum.mImages, position);
+        PreviewActivity.startActivity(getActivity(), mImageAlbum.mImages, position, view);
     }
 }

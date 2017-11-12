@@ -11,8 +11,6 @@ public interface EditView extends MvpView {
 
     void getBitmapFromPath();
 
-    void setupToolbar();
-
     void updateToolbar(String title, int icon);
 
     void openTool(Tool tool);

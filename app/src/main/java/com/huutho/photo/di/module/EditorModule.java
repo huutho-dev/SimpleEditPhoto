@@ -29,6 +29,7 @@ import com.huutho.photo.models.Rotate;
 import com.huutho.photo.models.Sticker;
 import com.huutho.photo.models.StickerCategory;
 import com.huutho.photo.models.Tool;
+import com.isseiaoki.simplecropview.CropImageView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,6 +48,9 @@ public class EditorModule {
 
     public static final String KEY_ADJUST_TOOL = "KEY_ADJUST_TOOL";
     public static final String KEY_ADJUST_CONFIG = "KEY_ADJUST_CONFIG";
+
+    public static final String KEY_OVERLAY_TOOL = "KEY_OVERLAY_TOOL";
+    public static final String KEY_OVERLAY_CONFIG = "KEY_OVERLAY_CONFIG";
 
     @Provides
     List<Tool> provideTools() {
@@ -111,11 +115,11 @@ public class EditorModule {
     @Provides
     List<Crop> provideCrop() {
         List<Crop> crops = new ArrayList<>();
-        crops.add(new Crop("Free", R.drawable.icon_crop_free_dark));
-        crops.add(new Crop("1:1", R.drawable.icon_crop_1_1_dark));
-        crops.add(new Crop("2:3", R.drawable.icon_crop_2_3_dark));
-        crops.add(new Crop("3:4", R.drawable.icon_crop_3_4_dark));
-        crops.add(new Crop("9:16", R.drawable.icon_crop_9_16_dark));
+        crops.add(new Crop("Free", R.drawable.icon_crop_free_dark, CropImageView.CropMode.FREE));
+        crops.add(new Crop("1:1", R.drawable.icon_crop_1_1_dark, CropImageView.CropMode.SQUARE));
+        crops.add(new Crop("2:3", R.drawable.icon_crop_2_3_dark, CropImageView.CropMode.RATIO_16_9));
+        crops.add(new Crop("3:4", R.drawable.icon_crop_3_4_dark, CropImageView.CropMode.RATIO_3_4));
+        crops.add(new Crop("9:16", R.drawable.icon_crop_9_16_dark, CropImageView.CropMode.RATIO_9_16));
         return crops;
     }
 
@@ -271,7 +275,7 @@ public class EditorModule {
     List<Overlay> provideOverlay() {
         List<Overlay> overlays = new ArrayList<>();
         for (int i = 1; i <= 25; i++) {
-            String path = Constant.FILE_ASSETS + Constant.OVERLAY.OVERLAY + "overlay_";
+            String path =  Constant.OVERLAY.OVERLAY + "overlay_";
             overlays.add(new Overlay(path + i + ".jpg"));
         }
         return overlays;

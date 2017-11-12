@@ -1,5 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:custom="http://schemas.android.com/apk/res-auto"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:id="@+id/layout_root"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
@@ -14,7 +15,7 @@
             android:id="@+id/imv_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_back"/>
+            app:srcCompat="@drawable/ic_back"/>
 
         <ImageView
             android:id="@+id/imv_done"
@@ -22,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_marginRight="24dp"
-            android:src="@drawable/ic_done"/>
+            app:srcCompat="@drawable/ic_done"/>
 
     </android.support.v7.widget.Toolbar>
 
@@ -36,9 +37,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:padding="16dp"
+        android:padding="@dimen/_16dp"
         android:scaleType="matrix"
-        custom:scv_background_color="@color/background_crop_view"
+        custom:scv_background_color="@android:color/transparent"
         custom:scv_crop_mode="free"
         custom:scv_frame_color="@color/colorAccent"
         custom:scv_frame_stroke_weight="1dp"
@@ -76,7 +77,7 @@
                 android:layout_marginRight="24dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="8dp"
-                android:src="@drawable/ic_flip_horizontal"/>
+                app:srcCompat="@drawable/ic_flip_horizontal"/>
 
             <ImageButton
                 android:id="@+id/imv_rotate_left"
@@ -86,7 +87,7 @@
                 android:layout_marginRight="24dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="8dp"
-                android:src="@drawable/ic_rotate_left"/>
+                app:srcCompat="@drawable/ic_rotate_left"/>
 
             <ImageButton
                 android:id="@+id/imv_rotate_right"
@@ -96,7 +97,7 @@
                 android:layout_marginRight="24dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="8dp"
-                android:src="@drawable/ic_rotate_right"/>
+                app:srcCompat="@drawable/ic_rotate_right"/>
 
             <ImageButton
                 android:id="@+id/imv_flip_vertical"
@@ -106,7 +107,7 @@
                 android:layout_marginRight="24dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="8dp"
-                android:src="@drawable/ic_flip_vertical"/>
+                app:srcCompat="@drawable/ic_flip_vertical"/>
 
         </LinearLayout>
 

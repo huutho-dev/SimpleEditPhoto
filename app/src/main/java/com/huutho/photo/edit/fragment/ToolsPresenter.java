@@ -24,7 +24,4 @@ public class ToolsPresenter extends MvpPresenter<ToolsView> {
         getViewState().setupToolsView(mToolData);
     }
 
-    public void onToolClick(Tool tool) {
-        getViewState().onToolClick(tool);
-    }
 }

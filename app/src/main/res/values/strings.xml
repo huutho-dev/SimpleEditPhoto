@@ -8,6 +8,10 @@
     <!--EditActivity-->
     <string name="edit_activity">Edit Photo</string>
     <string name="reset">Reset</string>
+    <string name="menu_undo">Undo</string>
+    <string name="menu_redo">Redo</string>
+    <string name="menu_done">Done</string>
+    <string name="menu_save">Save</string>
 
     <string name="preview_activity">Preview Photo</string>
 

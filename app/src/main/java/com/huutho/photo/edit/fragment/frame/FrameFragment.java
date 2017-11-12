@@ -2,33 +2,36 @@ package com.huutho.photo.edit.fragment.frame;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.huutho.photo.R;
+import com.huutho.photo.base.BaseToolFragment;
 import com.huutho.photo.models.Frame;
+import com.huutho.photo.utils.LogUtils;
 
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
+
+import static com.huutho.photo.gallery.fragment.gallery.images.GalleryImagesFragment.TAG;
 
 /**
  * Created by ThoNh on 11/1/2017.
  */
 
-public class FrameFragment extends MvpAppCompatFragment implements FrameView {
+public class FrameFragment extends BaseToolFragment implements FrameView {
 
     @InjectPresenter
     FramePresenter mPresenter;
 
     @BindView(R.id.frame_container)
     LinearLayout mContainer;
+
+    private String mConfig;
 
 
     public static FrameFragment newInstance() {
@@ -44,10 +47,18 @@ public class FrameFragment extends MvpAppCompatFragment implements FrameView {
         return inflater.inflate(R.layout.fragment_frame, container, false);
     }
 
+
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        ButterKnife.bind(this, view);
+    public void onSave() {
+        getActivity().onBackPressed();
+        mBitmapManager.appendConfig(mConfig);
+        mImageView.setFilterWithConfig(mBitmapManager.getResultConfig());
+        LogUtils.e(TAG, "config--->" + mConfig + "\nresult:" + mBitmapManager.getResultConfig());
+    }
+
+    @Override
+    public void onCancel() {
+        mImageView.setFilterWithConfig(mBitmapManager.getResultConfig());
     }
 
     @Override
@@ -66,9 +77,13 @@ public class FrameFragment extends MvpAppCompatFragment implements FrameView {
     }
 
     @Override
-    public void onFrameClick(Frame frame) {
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
-        alertDialog.setMessage("Show Sticker Here");
-        alertDialog.show();
+    public void onFrameClick(final Frame frame) {
+        mImageView.post(new Runnable() {
+            @Override
+            public void run() {
+                mConfig = frame.mConfig;
+                mImageView.setFilterWithConfig(mBitmapManager.getResultConfig() + frame.mConfig);
+            }
+        });
     }
 }

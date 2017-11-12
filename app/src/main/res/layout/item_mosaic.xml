@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
+    android:background="?attr/selectableItemBackgroundBorderless"
     android:layout_height="match_parent">
 
     <ImageView
@@ -11,7 +13,7 @@
         android:layout_width="@dimen/_40dp"
         android:layout_height="@dimen/_40dp"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/icon_mosaic_icon_normal"/>
+        app:srcCompat="@drawable/icon_mosaic_icon_normal"/>
 
     <TextView
         android:layout_marginTop="2dp"

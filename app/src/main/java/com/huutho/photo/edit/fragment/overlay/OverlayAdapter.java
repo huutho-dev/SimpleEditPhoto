@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.huutho.photo.Constant;
 import com.huutho.photo.R;
 import com.huutho.photo.models.Overlay;
 import com.huutho.photo.utils.LogUtils;
@@ -51,11 +52,14 @@ public class OverlayAdapter extends RecyclerView.Adapter<OverlayAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
+
+        String path = Constant.FILE_ASSETS +  mOverlayList.get(position).nNameOverlay;
+
         Glide.with(holder.itemView.getContext())
-                .load(mOverlayList.get(holder.getAdapterPosition()).mPathImageOverlay)
+                .load(path)
                 .into(holder.mImageView);
 
-        LogUtils.e(TAG, "path: " + mOverlayList.get(position).mPathImageOverlay);
+        LogUtils.e(TAG, "path: " + path);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
