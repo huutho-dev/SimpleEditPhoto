@@ -40,22 +40,35 @@ public class EditActivity extends MvpAppCompatActivity implements EditView {
     private static final String TAG = EditActivity.class.getSimpleName();
     private static final String EXTRA_IMAGE_PATH = "EXTRA_IMAGE_PATH";
 
-    @InjectPresenter                        public EditPresenter mPresenter;
-    @BindView(R.id.imv_back)                public ImageView mImvBack;
-    @BindView(R.id.imv_menu_undo)           public ImageView mImvMenuUndo;
-    @BindView(R.id.imv_menu_redo)           public ImageView mImvMenuRedo;
-    @BindView(R.id.imv_menu_done)           public ImageView mImvMenuDone;
-    @BindView(R.id.tv_title_toolbar)        public TextView mTvTitleToolbar;
-    @BindView(R.id.layout_editor)           public LinearLayout mLayoutEditor;
-    @BindView(R.id.tv_fragment_tool_save)   public TextView mTvFragmentToolSave;
-    @BindView(R.id.layout_tool)             public LinearLayout mLayoutTool;
-    @BindView(R.id.image)                   public ImageGLSurfaceView mImageView;
-    @BindView(R.id.cropImageView)           public CropImageView mCropImageView;
-    @BindView(R.id.seekbar_container)       public FrameLayout mContainerSeekBar;
+    @InjectPresenter
+    public EditPresenter mPresenter;
+    @BindView(R.id.imv_back)
+    public ImageView mImvBack;
+    @BindView(R.id.imv_menu_undo)
+    public ImageView mImvMenuUndo;
+    @BindView(R.id.imv_menu_redo)
+    public ImageView mImvMenuRedo;
+    @BindView(R.id.imv_menu_done)
+    public ImageView mImvMenuDone;
+    @BindView(R.id.tv_title_toolbar)
+    public TextView mTvTitleToolbar;
+    @BindView(R.id.layout_editor)
+    public LinearLayout mLayoutEditor;
+    @BindView(R.id.tv_fragment_tool_save)
+    public TextView mTvFragmentToolSave;
+    @BindView(R.id.layout_tool)
+    public LinearLayout mLayoutTool;
+    @BindView(R.id.image)
+    public ImageGLSurfaceView mImageView;
+    @BindView(R.id.cropImageView)
+    public CropImageView mCropImageView;
+    @BindView(R.id.seekbar_container)
+    public FrameLayout mContainerSeekBar;
 
-    private FragmentManager     mFragmentManager;
-    public Bitmap               mBitmap;
-    public StateBitmapManager   mBitmapManager;
+    private FragmentManager mFragmentManager;
+    public Bitmap mOriginBitmap;
+    public Bitmap mEditBitmap;
+    public StateBitmapManager mBitmapManager;
 
 
     public static void newInstance(Activity activity, String pathImage) {
@@ -68,9 +81,8 @@ public class EditActivity extends MvpAppCompatActivity implements EditView {
     public void getBitmapFromPath() {
         String imagePath = getIntent().getStringExtra(EXTRA_IMAGE_PATH);
         if (imagePath != null) {
-            mBitmap = BitmapUtils.resizeBitmap(imagePath, ScreenUtils.getScreenWidth());
-            LogUtils.e(TAG, "getBitmapFromPath() --> path:" + imagePath);
-            LogUtils.logBitmap(TAG, mBitmap);
+            mOriginBitmap = BitmapUtils.resizeBitmap(imagePath, ScreenUtils.getScreenWidth());
+            mEditBitmap = Bitmap.createBitmap(mOriginBitmap);
         } else {
             Toast.makeText(
                     this,
@@ -93,7 +105,7 @@ public class EditActivity extends MvpAppCompatActivity implements EditView {
             @Override
             public void surfaceCreated() {
                 mImageView.setDisplayMode(ImageGLSurfaceView.DisplayMode.DISPLAY_ASPECT_FIT);
-                mImageView.setImageBitmap(mBitmap);
+                mImageView.setImageBitmap(mEditBitmap);
             }
         });
 
@@ -165,6 +177,18 @@ public class EditActivity extends MvpAppCompatActivity implements EditView {
         return mImageView;
     }
 
+    public Bitmap getBitmapSurface() {
+        return mEditBitmap;
+    }
+
+    public void setBitmapSurfaceView(Bitmap bitmap) {
+        mEditBitmap = bitmap;
+        if (mImageView.getVisibility() == View.INVISIBLE || mImageView.getVisibility() == View.GONE){
+            mImageView.setVisibility(View.VISIBLE);
+        }
+        mImageView.setImageBitmap(mEditBitmap);
+    }
+
     @OnClick({R.id.imv_back, R.id.imv_menu_undo, R.id.imv_menu_redo, R.id.imv_menu_done, R.id.tv_fragment_tool_save})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -179,6 +203,7 @@ public class EditActivity extends MvpAppCompatActivity implements EditView {
                 break;
             case R.id.tv_fragment_tool_save:
                 ((BaseToolFragment) mFragmentManager.findFragmentById(R.id.bottom_container)).onSave();
+                onBackPressed();
                 break;
         }
     }

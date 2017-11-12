@@ -2,6 +2,7 @@ package com.huutho.photo.base;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.support.annotation.FloatRange;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.huutho.photo.R;
 import com.huutho.photo.crop.StateBitmapManager;
 import com.huutho.photo.edit.EditActivity;
 
+import org.wysaid.nativePort.CGENativeLibrary;
 import org.wysaid.view.ImageGLSurfaceView;
 
 import butterknife.ButterKnife;
@@ -25,12 +27,11 @@ import butterknife.ButterKnife;
 public abstract class BaseToolFragment extends MvpAppCompatFragment implements SeekBar.OnSeekBarChangeListener {
 
     public FrameLayout mContainerSeekbar;
-    public ImageGLSurfaceView mImageView;
+    public ImageGLSurfaceView mImageGLSurfaceView;
 
     public SeekBar mSeekBar;
     public TextView mSeekValue;
 
-    public Bitmap mBitmap;
     public StateBitmapManager mBitmapManager;
 
     @Override
@@ -38,8 +39,7 @@ public abstract class BaseToolFragment extends MvpAppCompatFragment implements S
         super.onCreate(savedInstanceState);
 
         mBitmapManager = ((EditActivity) getActivity()).mBitmapManager;
-        mBitmap = ((EditActivity) getActivity()).mBitmap;
-        mImageView = ((EditActivity) getActivity()).getImageView();
+        mImageGLSurfaceView = ((EditActivity) getActivity()).getImageView();
         mContainerSeekbar = ((EditActivity) getActivity()).getContainerSeekBar();
         mContainerSeekbar.setVisibility(View.INVISIBLE);
 
@@ -49,15 +49,6 @@ public abstract class BaseToolFragment extends MvpAppCompatFragment implements S
         mSeekValue = adjustView.findViewById(R.id.tv_value);
         mSeekBar = adjustView.findViewById(R.id.seek_bar);
         mSeekBar.setOnSeekBarChangeListener(this);
-        adjustView.findViewById(R.id.tv_reset)
-                .setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (mSeekBar != null) {
-                            mSeekBar.setProgress(50);
-                        }
-                    }
-                });
     }
 
 
@@ -110,6 +101,14 @@ public abstract class BaseToolFragment extends MvpAppCompatFragment implements S
         }
     }
 
+    public Bitmap getBitmapSurfaceView() {
+        return ((EditActivity) getActivity()).getBitmapSurface();
+    }
+
+    public void setBitmapSurfaceView(Bitmap bitmap) {
+        ((EditActivity) getActivity()).setBitmapSurfaceView(bitmap);
+    }
+
     /**
      * When click Save in toolbar
      */
@@ -120,4 +119,8 @@ public abstract class BaseToolFragment extends MvpAppCompatFragment implements S
      * When click button back in toolbar
      */
     public abstract void onCancel();
+
+    public Bitmap saveBitmap(String config, @FloatRange(from = 0.0f, to = 1.0f) float intensity) {
+        return CGENativeLibrary.filterImage_MultipleEffects(getBitmapSurfaceView(), config, intensity);
+    }
 }

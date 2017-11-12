@@ -2,6 +2,7 @@ package com.huutho.photo.edit.fragment.adjust;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,7 +50,8 @@ public class AdjustFragment extends BaseToolFragment implements AdjustView, Seek
 
     @Override
     public void setupAdjustView(List<Adjust> adjustList, String config) {
-        mImageView.setFilterWithConfig(config);
+        Log.e("ThoNH","fuck:" + config);
+        mImageGLSurfaceView.setFilterWithConfig("@adjust sharpen 0");
         for (int i = 0; i < adjustList.size(); i++) {
             final AdjustItem adjustItem = new AdjustItem(getContext());
             adjustItem.setData(adjustList.get(i));
@@ -62,7 +64,7 @@ public class AdjustFragment extends BaseToolFragment implements AdjustView, Seek
             });
         }
 
-        // selected first adjust
+//        // selected first adjust
         onAdjustClick(adjustList.get(0));
     }
 
@@ -79,7 +81,10 @@ public class AdjustFragment extends BaseToolFragment implements AdjustView, Seek
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         mSeekValue.setText(String.valueOf(progress * 2 - 100));
         float intensity = mCurrentAdjust.calcIntensity(progress / 100.0f);
-        mImageView.setFilterIntensityForIndex(intensity, mCurrentAdjust.indexConfig, true);
+        Log.e("ThoNH","intensity:" + intensity);
+        mImageGLSurfaceView.setFilterIntensityForIndex(progress/10f,0, true);
+
+
     }
 
 

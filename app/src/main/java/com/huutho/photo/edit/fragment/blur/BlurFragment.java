@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.huutho.photo.App;
 import com.huutho.photo.R;
+import com.huutho.photo.base.BaseToolFragment;
 import com.huutho.photo.models.Blur;
 
 import java.util.List;
@@ -23,7 +24,7 @@ import butterknife.ButterKnife;
  * Created by ThoNh on 11/7/2017.
  */
 
-public class BlurFragment extends MvpAppCompatFragment{
+public class BlurFragment extends BaseToolFragment{
 
 
     @BindView(R.id.blur_container)
@@ -69,6 +70,16 @@ public class BlurFragment extends MvpAppCompatFragment{
                 }
             });
         }
+    }
+
+    @Override
+    public void onSave() {
+
+    }
+
+    @Override
+    public void onCancel() {
+
     }
 
     private void onBlurClick(Blur blur) {

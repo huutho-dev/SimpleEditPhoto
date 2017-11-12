@@ -52,13 +52,13 @@ public class FrameFragment extends BaseToolFragment implements FrameView {
     public void onSave() {
         getActivity().onBackPressed();
         mBitmapManager.appendConfig(mConfig);
-        mImageView.setFilterWithConfig(mBitmapManager.getResultConfig());
+        mImageGLSurfaceView.setFilterWithConfig(mBitmapManager.getResultConfig());
         LogUtils.e(TAG, "config--->" + mConfig + "\nresult:" + mBitmapManager.getResultConfig());
     }
 
     @Override
     public void onCancel() {
-        mImageView.setFilterWithConfig(mBitmapManager.getResultConfig());
+        mImageGLSurfaceView.setFilterWithConfig(mBitmapManager.getResultConfig());
     }
 
     @Override
@@ -78,11 +78,11 @@ public class FrameFragment extends BaseToolFragment implements FrameView {
 
     @Override
     public void onFrameClick(final Frame frame) {
-        mImageView.post(new Runnable() {
+        mImageGLSurfaceView.post(new Runnable() {
             @Override
             public void run() {
                 mConfig = frame.mConfig;
-                mImageView.setFilterWithConfig(mBitmapManager.getResultConfig() + frame.mConfig);
+                mImageGLSurfaceView.setFilterWithConfig(mBitmapManager.getResultConfig() + frame.mConfig);
             }
         });
     }

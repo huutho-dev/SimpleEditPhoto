@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.huutho.photo.App;
 import com.huutho.photo.R;
+import com.huutho.photo.base.BaseToolFragment;
 import com.huutho.photo.models.Mosaic;
 
 import java.util.List;
@@ -23,7 +24,7 @@ import butterknife.ButterKnife;
  * Created by ThoNh on 11/7/2017.
  */
 
-public class MosaicFragment extends MvpAppCompatFragment {
+public class MosaicFragment extends BaseToolFragment {
 
     @BindView(R.id.mosaic_container)
     LinearLayout mMosaicContainer;
@@ -68,6 +69,16 @@ public class MosaicFragment extends MvpAppCompatFragment {
                 }
             });
         }
+
+    }
+
+    @Override
+    public void onSave() {
+
+    }
+
+    @Override
+    public void onCancel() {
 
     }
 

@@ -51,7 +51,7 @@ public class OverlayFragment extends BaseToolFragment implements OverlayView, Se
     @Override
     public void onSave() {
         mBitmapManager.appendConfig(mOverlay.getConfig());
-        mImageView.setFilterWithConfig(mBitmapManager.getResultConfig());
+        mImageGLSurfaceView.setFilterWithConfig(mBitmapManager.getResultConfig());
 
         (getActivity()).onBackPressed();
 
@@ -60,9 +60,7 @@ public class OverlayFragment extends BaseToolFragment implements OverlayView, Se
 
     @Override
     public void onCancel() {
-        mImageView.setFilterWithConfig(mBitmapManager.getResultConfig());
-
-        LogUtils.e(TAG, "config--->" + mOverlay.getConfig() + "\nresult:" + mBitmapManager.getResultConfig());
+        mImageGLSurfaceView.setFilterWithConfig(mBitmapManager.getResultConfig());
     }
 
     @Override
@@ -90,11 +88,11 @@ public class OverlayFragment extends BaseToolFragment implements OverlayView, Se
 
         final String config = mOverlay.originConfig();
         Log.e("ThoNH", "C:" + config);
-        mImageView.post(new Runnable() {
+        mImageGLSurfaceView.post(new Runnable() {
             @Override
             public void run() {
                 String c = mBitmapManager.getResultConfig() + config;
-                mImageView.setFilterWithConfig(c);
+                mImageGLSurfaceView.setFilterWithConfig(c);
                 mSeekBar.setProgress(50);
             }
         });
@@ -104,6 +102,6 @@ public class OverlayFragment extends BaseToolFragment implements OverlayView, Se
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         super.onProgressChanged(seekBar, progress, fromUser);
         mOverlay.setIntensity((float)progress/100.0f);
-        mImageView.setFilterIntensity((float) progress/100.0f);
+        mImageGLSurfaceView.setFilterIntensity((float) progress/100.0f);
     }
 }

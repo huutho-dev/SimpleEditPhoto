@@ -16,7 +16,7 @@ import com.huutho.photo.edit.EditActivity;
 import com.huutho.photo.models.Crop;
 import com.isseiaoki.simplecropview.CropImageView;
 
-import org.wysaid.view.ImageGLSurfaceView;
+import org.wysaid.texUtils.TextureRendererMask;
 
 import java.util.List;
 
@@ -38,7 +38,6 @@ public class CropFragment extends BaseToolFragment {
 
     private Bitmap mBitmap;
     private CropImageView mCropImageView;
-    private ImageGLSurfaceView mImageGLSurfaceView;
 
 
     public static CropFragment newInstance() {
@@ -52,16 +51,8 @@ public class CropFragment extends BaseToolFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         App.editorComponent.inject(this);
-
-        (getActivity())
-                .findViewById(R.id.imv_menu_done)
-                .setOnClickListener(
-                        new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                mImageGLSurfaceView.setImageBitmap(mCropImageView.getImageBitmap());
-                            }
-                        });
+        mBitmap = getBitmapSurfaceView();
+        mCropImageView = ((EditActivity) getActivity()).mCropImageView;
     }
 
     @Nullable
@@ -92,12 +83,8 @@ public class CropFragment extends BaseToolFragment {
     @Override
     public void onResume() {
         super.onResume();
-        mBitmap = ((EditActivity) getActivity()).mBitmap;
-        mCropImageView = ((EditActivity) getActivity()).mCropImageView;
-        mImageGLSurfaceView = ((EditActivity) getActivity()).mImageView;
-
-
         mCropImageView.setVisibility(View.VISIBLE);
+        mCropImageView.setCropEnabled(true);
         mCropImageView.setImageBitmap(mBitmap);
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -105,7 +92,7 @@ public class CropFragment extends BaseToolFragment {
                 mImageGLSurfaceView.setVisibility(View.GONE);
 
             }
-        }, 50);
+        }, 150);
 
 
     }
@@ -129,8 +116,9 @@ public class CropFragment extends BaseToolFragment {
 
     @Override
     public void onSave() {
-        getActivity().onBackPressed();
-        mImageView.setImageBitmap(mBitmap);
+        mCropImageView.setVisibility(View.GONE);
+        Bitmap bitmap = mCropImageView.getCroppedBitmap();
+        setBitmapSurfaceView(bitmap);
     }
 
     @Override
