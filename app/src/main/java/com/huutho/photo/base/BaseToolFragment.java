@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.huutho.photo.R;
-import com.huutho.photo.crop.StateBitmapManager;
 import com.huutho.photo.edit.EditActivity;
 
 import org.wysaid.nativePort.CGENativeLibrary;
@@ -32,13 +31,11 @@ public abstract class BaseToolFragment extends MvpAppCompatFragment implements S
     public SeekBar mSeekBar;
     public TextView mSeekValue;
 
-    public StateBitmapManager mBitmapManager;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mBitmapManager = ((EditActivity) getActivity()).mBitmapManager;
         mImageGLSurfaceView = ((EditActivity) getActivity()).getImageView();
         mContainerSeekbar = ((EditActivity) getActivity()).getContainerSeekBar();
         mContainerSeekbar.setVisibility(View.INVISIBLE);

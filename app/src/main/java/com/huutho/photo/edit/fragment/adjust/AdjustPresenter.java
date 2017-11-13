@@ -3,7 +3,7 @@ package com.huutho.photo.edit.fragment.adjust;
 import com.arellomobile.mvp.InjectViewState;
 import com.arellomobile.mvp.MvpPresenter;
 import com.huutho.photo.App;
-import com.huutho.photo.di.module.EditorModule;
+import com.huutho.photo.di.module.AdjustModule;
 import com.huutho.photo.models.Adjust;
 
 import java.util.List;
@@ -24,8 +24,8 @@ public class AdjustPresenter extends MvpPresenter<AdjustView> {
     public AdjustPresenter(){
         App.editorComponent.inject(this);
         getViewState().setupAdjustView(
-                (List<Adjust>) mAdjustMap.get(EditorModule.KEY_ADJUST_TOOL),
-                (String) mAdjustMap.get(EditorModule.KEY_ADJUST_CONFIG));
+                (List<Adjust>) mAdjustMap.get(AdjustModule.KEY_ADJUST_TOOL),
+                (String) mAdjustMap.get(AdjustModule.KEY_ADJUST_CONFIG));
     }
 
 }

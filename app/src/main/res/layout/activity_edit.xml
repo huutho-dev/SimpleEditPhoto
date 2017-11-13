@@ -4,7 +4,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 xmlns:custom="http://schemas.android.com/apk/res-auto"
-                android:background="@color/white">
+                android:background="#02000000">
 
     <RelativeLayout
         android:id="@+id/toolbar"
@@ -41,7 +41,6 @@
             android:gravity="right">
 
             <ImageView
-                android:visibility="gone"
                 android:id="@+id/imv_menu_undo"
                 android:layout_width="?attr/actionBarSize"
                 android:layout_height="?attr/actionBarSize"
@@ -53,7 +52,6 @@
 
 
             <ImageView
-                android:visibility="gone"
                 android:id="@+id/imv_menu_redo"
                 android:layout_width="?attr/actionBarSize"
                 android:layout_height="?attr/actionBarSize"

@@ -1,5 +1,6 @@
 package com.huutho.photo.edit.fragment.frame;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -11,13 +12,12 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.huutho.photo.R;
 import com.huutho.photo.base.BaseToolFragment;
 import com.huutho.photo.models.Frame;
-import com.huutho.photo.utils.LogUtils;
+
+import org.wysaid.nativePort.CGENativeLibrary;
 
 import java.util.List;
 
 import butterknife.BindView;
-
-import static com.huutho.photo.gallery.fragment.gallery.images.GalleryImagesFragment.TAG;
 
 /**
  * Created by ThoNh on 11/1/2017.
@@ -31,7 +31,7 @@ public class FrameFragment extends BaseToolFragment implements FrameView {
     @BindView(R.id.frame_container)
     LinearLayout mContainer;
 
-    private String mConfig;
+   private Frame mFrame;
 
 
     public static FrameFragment newInstance() {
@@ -50,15 +50,16 @@ public class FrameFragment extends BaseToolFragment implements FrameView {
 
     @Override
     public void onSave() {
-        getActivity().onBackPressed();
-        mBitmapManager.appendConfig(mConfig);
-        mImageGLSurfaceView.setFilterWithConfig(mBitmapManager.getResultConfig());
-        LogUtils.e(TAG, "config--->" + mConfig + "\nresult:" + mBitmapManager.getResultConfig());
+        Bitmap bitmap = Bitmap.createBitmap(getBitmapSurfaceView());
+        bitmap = CGENativeLibrary.filterImage_MultipleEffects(bitmap, mFrame.mConfig, 1.0f);
+        setBitmapSurfaceView(bitmap);
     }
 
     @Override
     public void onCancel() {
-        mImageGLSurfaceView.setFilterWithConfig(mBitmapManager.getResultConfig());
+        Bitmap bitmap = Bitmap.createBitmap(getBitmapSurfaceView());
+        bitmap = CGENativeLibrary.filterImage_MultipleEffects(bitmap, "", 1.0f);
+        setBitmapSurfaceView(bitmap);
     }
 
     @Override
@@ -81,8 +82,8 @@ public class FrameFragment extends BaseToolFragment implements FrameView {
         mImageGLSurfaceView.post(new Runnable() {
             @Override
             public void run() {
-                mConfig = frame.mConfig;
-                mImageGLSurfaceView.setFilterWithConfig(mBitmapManager.getResultConfig() + frame.mConfig);
+                mFrame = frame;
+                mImageGLSurfaceView.setFilterWithConfig(mFrame.mConfig);
             }
         });
     }

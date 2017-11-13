@@ -1,10 +1,10 @@
 package com.huutho.photo.edit.fragment.overlay;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +14,8 @@ import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.huutho.photo.R;
 import com.huutho.photo.base.BaseToolFragment;
 import com.huutho.photo.models.Overlay;
-import com.huutho.photo.utils.LogUtils;
+
+import org.wysaid.nativePort.CGENativeLibrary;
 
 import java.util.List;
 
@@ -50,17 +51,16 @@ public class OverlayFragment extends BaseToolFragment implements OverlayView, Se
 
     @Override
     public void onSave() {
-        mBitmapManager.appendConfig(mOverlay.getConfig());
-        mImageGLSurfaceView.setFilterWithConfig(mBitmapManager.getResultConfig());
-
-        (getActivity()).onBackPressed();
-
-        LogUtils.e(TAG, "config--->" + mOverlay.getConfig() + "\nresult:" + mBitmapManager.getResultConfig());
+        Bitmap bitmap = Bitmap.createBitmap(getBitmapSurfaceView());
+        bitmap = CGENativeLibrary.filterImage_MultipleEffects(bitmap, mOverlay.getConfig(), 1.0f);
+        setBitmapSurfaceView(bitmap);
     }
 
     @Override
     public void onCancel() {
-        mImageGLSurfaceView.setFilterWithConfig(mBitmapManager.getResultConfig());
+        Bitmap bitmap = Bitmap.createBitmap(getBitmapSurfaceView());
+        bitmap = CGENativeLibrary.filterImage_MultipleEffects(bitmap, "", 1.0f);
+        setBitmapSurfaceView(bitmap);
     }
 
     @Override
@@ -85,14 +85,11 @@ public class OverlayFragment extends BaseToolFragment implements OverlayView, Se
         }
 
         mOverlay = overlay;
-
         final String config = mOverlay.originConfig();
-        Log.e("ThoNH", "C:" + config);
         mImageGLSurfaceView.post(new Runnable() {
             @Override
             public void run() {
-                String c = mBitmapManager.getResultConfig() + config;
-                mImageGLSurfaceView.setFilterWithConfig(c);
+                mImageGLSurfaceView.setFilterWithConfig(config);
                 mSeekBar.setProgress(50);
             }
         });
@@ -101,7 +98,7 @@ public class OverlayFragment extends BaseToolFragment implements OverlayView, Se
     @Override
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         super.onProgressChanged(seekBar, progress, fromUser);
-        mOverlay.setIntensity((float)progress/100.0f);
-        mImageGLSurfaceView.setFilterIntensity((float) progress/100.0f);
+        mOverlay.setIntensity((float) progress / 100.0f);
+        mImageGLSurfaceView.setFilterIntensity((float) progress / 100.0f);
     }
 }

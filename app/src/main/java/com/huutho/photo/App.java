@@ -6,7 +6,18 @@ import android.support.v4.util.LruCache;
 
 import com.huutho.photo.di.DaggerEditorComponent;
 import com.huutho.photo.di.EditorComponent;
+import com.huutho.photo.di.module.AdjustModule;
+import com.huutho.photo.di.module.BlurModule;
+import com.huutho.photo.di.module.CropModule;
 import com.huutho.photo.di.module.EditorModule;
+import com.huutho.photo.di.module.FilterModule;
+import com.huutho.photo.di.module.FrameModule;
+import com.huutho.photo.di.module.MosaicModule;
+import com.huutho.photo.di.module.OverlayModule;
+import com.huutho.photo.di.module.PaintModule;
+import com.huutho.photo.di.module.RotateModule;
+import com.huutho.photo.di.module.StickerModule;
+import com.huutho.photo.di.module.ToolsModule;
 
 /**
  * Created by ThoNh on 10/30/2017.
@@ -33,9 +44,18 @@ public class App extends Application {
         editorComponent = DaggerEditorComponent
                 .builder()
                 .editorModule(new EditorModule())
+                .adjustModule(new AdjustModule())
+                .blurModule(new BlurModule())
+                .cropModule(new CropModule())
+                .filterModule(new FilterModule())
+                .frameModule(new FrameModule())
+                .mosaicModule(new MosaicModule())
+                .overlayModule(new OverlayModule())
+                .paintModule(new PaintModule())
+                .rotateModule(new RotateModule())
+                .stickerModule(new StickerModule())
+                .toolsModule(new ToolsModule())
                 .build();
-
-
     }
 
 
@@ -61,7 +81,7 @@ public class App extends Application {
 
     }
 
-    public void removeBitmapMemoryCache(String key){
+    public void removeBitmapMemoryCache(String key) {
         mMemoryCache.remove(key);
     }
 

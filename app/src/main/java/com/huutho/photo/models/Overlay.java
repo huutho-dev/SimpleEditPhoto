@@ -20,8 +20,8 @@ public class Overlay {
         return "@krblend mix " + nNameOverlay + " " + mIntensity * fucking;
     }
 
-    public String originConfig (){
-        return "@krblend mix " + nNameOverlay + " "+mIntensity;
+    public String originConfig() {
+        return "@krblend mix " + nNameOverlay + " " + mIntensity;
     }
 
     public void setIntensity(float fuck) {

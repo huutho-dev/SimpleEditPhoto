@@ -3,6 +3,7 @@ package com.huutho.photo.edit;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
@@ -18,7 +19,6 @@ import com.arellomobile.mvp.MvpAppCompatActivity;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.huutho.photo.R;
 import com.huutho.photo.base.BaseToolFragment;
-import com.huutho.photo.crop.StateBitmapManager;
 import com.huutho.photo.edit.fragment.ToolsFragment;
 import com.huutho.photo.models.Tool;
 import com.huutho.photo.utils.LogUtils;
@@ -26,6 +26,9 @@ import com.huutho.photo.utils.ScreenUtils;
 import com.isseiaoki.simplecropview.CropImageView;
 
 import org.wysaid.view.ImageGLSurfaceView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -42,6 +45,7 @@ public class EditActivity extends MvpAppCompatActivity implements EditView {
 
     @InjectPresenter
     public EditPresenter mPresenter;
+
     @BindView(R.id.imv_back)
     public ImageView mImvBack;
     @BindView(R.id.imv_menu_undo)
@@ -65,10 +69,11 @@ public class EditActivity extends MvpAppCompatActivity implements EditView {
     @BindView(R.id.seekbar_container)
     public FrameLayout mContainerSeekBar;
 
+    private List<Bitmap> mBitmapForUndoRedo;
+
     private FragmentManager mFragmentManager;
     public Bitmap mOriginBitmap;
     public Bitmap mEditBitmap;
-    public StateBitmapManager mBitmapManager;
 
 
     public static void newInstance(Activity activity, String pathImage) {
@@ -97,7 +102,7 @@ public class EditActivity extends MvpAppCompatActivity implements EditView {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
         ButterKnife.bind(this);
-        mBitmapManager = new StateBitmapManager();
+        mBitmapForUndoRedo = new ArrayList<>();
 
         mImageView.setZOrderOnTop(true);
         mImageView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
@@ -106,6 +111,14 @@ public class EditActivity extends MvpAppCompatActivity implements EditView {
             public void surfaceCreated() {
                 mImageView.setDisplayMode(ImageGLSurfaceView.DisplayMode.DISPLAY_ASPECT_FIT);
                 mImageView.setImageBitmap(mEditBitmap);
+
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        addToUndoList(mEditBitmap);
+                    }
+                });
+
             }
         });
 
@@ -164,6 +177,12 @@ public class EditActivity extends MvpAppCompatActivity implements EditView {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        recycleBitmapList();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_activity_editor, menu);
         return true;
@@ -183,10 +202,11 @@ public class EditActivity extends MvpAppCompatActivity implements EditView {
 
     public void setBitmapSurfaceView(Bitmap bitmap) {
         mEditBitmap = bitmap;
-        if (mImageView.getVisibility() == View.INVISIBLE || mImageView.getVisibility() == View.GONE){
+        if (mImageView.getVisibility() == View.INVISIBLE || mImageView.getVisibility() == View.GONE) {
             mImageView.setVisibility(View.VISIBLE);
         }
         mImageView.setImageBitmap(mEditBitmap);
+        addToUndoList(mEditBitmap);
     }
 
     @OnClick({R.id.imv_back, R.id.imv_menu_undo, R.id.imv_menu_redo, R.id.imv_menu_done, R.id.tv_fragment_tool_save})
@@ -196,16 +216,106 @@ public class EditActivity extends MvpAppCompatActivity implements EditView {
                 onBackPressed();
                 break;
             case R.id.imv_menu_undo:
+                mEditBitmap.recycle();
+                mEditBitmap = getUndoBitmap();
+                mImageView.setImageBitmap(mEditBitmap);
+                setButtonVisibility();
                 break;
             case R.id.imv_menu_redo:
+                mEditBitmap.recycle();
+                mEditBitmap = getRedoBitmap();
+                mImageView.setImageBitmap(mEditBitmap);
+                setButtonVisibility();
                 break;
             case R.id.imv_menu_done:
                 break;
             case R.id.tv_fragment_tool_save:
                 ((BaseToolFragment) mFragmentManager.findFragmentById(R.id.bottom_container)).onSave();
-                onBackPressed();
+                if (mFragmentManager.getBackStackEntryCount() > 0) {
+                    mFragmentManager.popBackStack();
+                } else {
+                    finish();
+                }
                 break;
         }
     }
 
+
+    /***************************************UNDO - REDO BITMAP************************************/
+
+    private int mCurrentShowIndex = -1;
+
+    private void addToUndoList(Bitmap bitmap) {
+        try {
+            recycleBitmapList(++mCurrentShowIndex);
+            mBitmapForUndoRedo.add(bitmap.copy(bitmap.getConfig(), true));
+            LogUtils.e(TAG, "addToUndoList ----> try() size:" + mBitmapForUndoRedo.size() + "----> currentIndex:" + mCurrentShowIndex);
+        } catch (OutOfMemoryError error) {
+            mBitmapForUndoRedo.get(1).recycle();
+            mBitmapForUndoRedo.remove(1);
+            mBitmapForUndoRedo.add(mEditBitmap.copy(mEditBitmap.getConfig(), true));
+            LogUtils.e(TAG, "addToUndoList ----> catch() size:" + mBitmapForUndoRedo.size() + "----> currentIndex:" + mCurrentShowIndex);
+            error.printStackTrace();
+        }
+        setButtonVisibility();
+    }
+
+    // When i have 6 bitmap in arrayList
+    // I undo to position 4 then i added one bitmap after position 4 --> this function remove bitmap 5old and 6
+    private void recycleBitmapList(int fromIndex) {
+        while (fromIndex < mBitmapForUndoRedo.size()) {
+            mBitmapForUndoRedo.get(fromIndex).recycle();
+            mBitmapForUndoRedo.remove(fromIndex);
+            LogUtils.e(TAG, "recycleBitmapList ----> white() size:" + mBitmapForUndoRedo.size() + "----> fromIndex:" + fromIndex);
+        }
+    }
+
+    // remove all bitmap in ArrayList
+    // should call onDestroy
+    private void recycleBitmapList() {
+        recycleBitmapList(0);
+    }
+
+    private Bitmap getUndoBitmap() {
+        if (mCurrentShowIndex - 1 >= 0) {
+            mCurrentShowIndex -= 1;
+            LogUtils.e(TAG, "getUndoBitmap ----> true() size:" + mBitmapForUndoRedo.size() + "----> mCurrentShowIndex:" + mCurrentShowIndex);
+        } else {
+            mCurrentShowIndex = 0;
+            LogUtils.e(TAG, "getUndoBitmap ----> false() size:" + mBitmapForUndoRedo.size() + "----> mCurrentShowIndex:" + mCurrentShowIndex);
+        }
+        return mBitmapForUndoRedo.get(mCurrentShowIndex)
+                .copy(mBitmapForUndoRedo.get(mCurrentShowIndex).getConfig(), true);
+    }
+
+    private Bitmap getRedoBitmap() {
+        if (mCurrentShowIndex < mBitmapForUndoRedo.size() - 1) {
+            mCurrentShowIndex += 1;
+            LogUtils.e(TAG, "getRedoBitmap ----> true() size:" + mBitmapForUndoRedo.size() + "----> mCurrentShowIndex:" + mCurrentShowIndex);
+        } else {
+            mCurrentShowIndex = mBitmapForUndoRedo.size() - 1;
+            LogUtils.e(TAG, "getRedoBitmap ----> false() size:" + mBitmapForUndoRedo.size() + "----> mCurrentShowIndex:" + mCurrentShowIndex);
+        }
+
+        return mBitmapForUndoRedo.get(mCurrentShowIndex)
+                .copy(mBitmapForUndoRedo.get(mCurrentShowIndex).getConfig(), true);
+    }
+
+    private void setButtonVisibility() {
+        if (mCurrentShowIndex > 0) {
+            mImvMenuUndo.setColorFilter(Color.BLACK);
+            mImvMenuUndo.setEnabled(true);
+        } else {
+            mImvMenuUndo.setColorFilter(Color.GRAY);
+            mImvMenuUndo.setEnabled(false);
+        }
+
+        if (mCurrentShowIndex < mBitmapForUndoRedo.size() - 1) {
+            mImvMenuRedo.setColorFilter(Color.BLACK);
+            mImvMenuRedo.setEnabled(true);
+        } else {
+            mImvMenuRedo.setColorFilter(Color.GRAY);
+            mImvMenuRedo.setEnabled(false);
+        }
+    }
 }

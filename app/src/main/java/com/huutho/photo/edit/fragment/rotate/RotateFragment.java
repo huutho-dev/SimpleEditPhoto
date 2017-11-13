@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.huutho.photo.App;
 import com.huutho.photo.R;
 import com.huutho.photo.base.BaseToolFragment;
@@ -105,6 +104,7 @@ public class RotateFragment extends BaseToolFragment {
     public void onSave() {
         Bitmap bitmap = mCropImageView.getCroppedBitmap();
         setBitmapSurfaceView(bitmap);
+        mCropImageView.setVisibility(View.GONE);
     }
 
     @Override
