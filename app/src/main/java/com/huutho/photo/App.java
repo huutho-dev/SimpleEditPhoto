@@ -7,12 +7,10 @@ import android.support.v4.util.LruCache;
 import com.huutho.photo.di.DaggerEditorComponent;
 import com.huutho.photo.di.EditorComponent;
 import com.huutho.photo.di.module.AdjustModule;
-import com.huutho.photo.di.module.BlurModule;
 import com.huutho.photo.di.module.CropModule;
 import com.huutho.photo.di.module.EditorModule;
 import com.huutho.photo.di.module.FilterModule;
 import com.huutho.photo.di.module.FrameModule;
-import com.huutho.photo.di.module.MosaicModule;
 import com.huutho.photo.di.module.OverlayModule;
 import com.huutho.photo.di.module.PaintModule;
 import com.huutho.photo.di.module.RotateModule;
@@ -45,11 +43,9 @@ public class App extends Application {
                 .builder()
                 .editorModule(new EditorModule())
                 .adjustModule(new AdjustModule())
-                .blurModule(new BlurModule())
                 .cropModule(new CropModule())
                 .filterModule(new FilterModule())
                 .frameModule(new FrameModule())
-                .mosaicModule(new MosaicModule())
                 .overlayModule(new OverlayModule())
                 .paintModule(new PaintModule())
                 .rotateModule(new RotateModule())

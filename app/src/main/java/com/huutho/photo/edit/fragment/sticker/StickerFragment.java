@@ -8,9 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.arellomobile.mvp.presenter.InjectPresenter;
 import com.huutho.photo.R;
+import com.huutho.photo.base.BaseToolFragment;
 import com.huutho.photo.models.StickerCategory;
 
 import java.util.List;
@@ -22,7 +22,7 @@ import butterknife.ButterKnife;
  * Created by ThoNh on 11/1/2017.
  */
 
-public class StickerFragment extends MvpAppCompatFragment implements StickerView {
+public class StickerFragment extends BaseToolFragment implements StickerView {
 
     @InjectPresenter
     StickerPresenter mPresenter;
@@ -72,6 +72,16 @@ public class StickerFragment extends MvpAppCompatFragment implements StickerView
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(getContext());
         alertDialog.setMessage("Show Sticker Here");
         alertDialog.show();
+    }
+
+    @Override
+    public void onSave() {
+
+    }
+
+    @Override
+    public void onCancel() {
+
     }
 
 }

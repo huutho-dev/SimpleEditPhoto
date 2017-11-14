@@ -4,12 +4,10 @@ import android.support.v4.app.Fragment;
 
 import com.huutho.photo.R;
 import com.huutho.photo.edit.fragment.adjust.AdjustFragment;
-import com.huutho.photo.edit.fragment.blur.BlurFragment;
 import com.huutho.photo.edit.fragment.crop.CropFragment;
 import com.huutho.photo.edit.fragment.drawing.DrawingFragment;
 import com.huutho.photo.edit.fragment.filter.FilterFragment;
 import com.huutho.photo.edit.fragment.frame.FrameFragment;
-import com.huutho.photo.edit.fragment.mosaic.MosaicFragment;
 import com.huutho.photo.edit.fragment.overlay.OverlayFragment;
 import com.huutho.photo.edit.fragment.rotate.RotateFragment;
 import com.huutho.photo.edit.fragment.sticker.StickerFragment;
@@ -32,9 +30,6 @@ public class ToolsModule {
     List<Tool> provideTools() {
         List<Tool> tools = new ArrayList<>();
         tools.add(new Tool("Filters", R.drawable.icon_cat_filter, FilterFragment.newInstance()));
-        tools.add(new Tool("Mosaic", R.drawable.icon_cat_mosaic_class, MosaicFragment.newInstance()));
-        tools.add(new Tool("Blur", R.drawable.icon_cat_blur, BlurFragment.newInstance()));
-//        tools.add(new Tool("Adjust", R.drawable.icon_cat_adjust_1, Adjust0Fragment.newInstance()));
         tools.add(new Tool("Adjust", R.drawable.icon_cat_adjust, AdjustFragment.newInstance()));
         tools.add(new Tool("Crop", R.drawable.icon_cat_crop, CropFragment.newInstance()));
         tools.add(new Tool("Rotate", R.drawable.icon_cat_rotate, RotateFragment.newInstance()));
