@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.arellomobile.mvp.MvpAppCompatFragment;
 import com.huutho.photo.R;
@@ -46,6 +47,12 @@ public abstract class BaseToolFragment extends MvpAppCompatFragment implements S
         mSeekValue = adjustView.findViewById(R.id.tv_value);
         mSeekBar = adjustView.findViewById(R.id.seek_bar);
         mSeekBar.setOnSeekBarChangeListener(this);
+        adjustView.findViewById(R.id.tv_reset).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onReset();
+            }
+        });
     }
 
 
@@ -62,6 +69,13 @@ public abstract class BaseToolFragment extends MvpAppCompatFragment implements S
         hideSeekBarLayout();
     }
 
+
+    /**
+     * Call when click button reset
+     */
+    public void onReset(){
+        Toast.makeText(getActivity(),"Reset",Toast.LENGTH_SHORT).show();
+    }
 
     /**
      * Override when tool use SeekBar

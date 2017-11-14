@@ -42,7 +42,6 @@ public class AdjustItem extends LinearLayout {
 
     public void setData(Adjust adjust) {
         mAdjust = adjust;
-        setTag(adjust.tag);
         mImageView.setImageResource(adjust.icon);
         mTextView.setText(adjust.name);
     }

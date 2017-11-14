@@ -8,23 +8,23 @@ public class Adjust {
 
     public String name;
     public int icon;
-    public String tag;
 
     public int indexConfig;
     public float mMinValue;
     public float mMaxValue;
     public float mOriginValue;
     public float savePositionSeekBar = 0.5f;
+    public float mCurrentValue;
 
 
-    public Adjust(String name, int icon, String tag, int indexConfig, float minValue, float maxValue, float originValue) {
+    public Adjust(String name, int icon, int indexConfig, float minValue, float maxValue, float originValue) {
         this.indexConfig = indexConfig;
         this.name = name;
         this.icon = icon;
-        this.tag = tag;
         mMinValue = minValue;
         mMaxValue = maxValue;
         mOriginValue = originValue;
+        mCurrentValue = mOriginValue;
     }
 
 
@@ -40,11 +40,26 @@ public class Adjust {
             result = mMinValue;
         } else if (mMinValue >= 1.0f) {
             result = mMaxValue;
-        } else if (_intensity <= 0.5f) {
+        } else if (_intensity < 0.5f) {
             result = mMinValue + (mOriginValue - mMinValue) * _intensity * 2.0f;
         } else {
             result = mMaxValue + (mOriginValue - mMaxValue) * (1.0f - _intensity) * 2.0f;
         }
+        mCurrentValue = result;
         return result;
+    }
+
+
+    @Override
+    public String toString() {
+        return "Adjust{" +
+                "name='" + name + '\'' +
+                ", icon=" + icon +
+                ", indexConfig=" + indexConfig +
+                ", mMinValue=" + mMinValue +
+                ", mMaxValue=" + mMaxValue +
+                ", mOriginValue=" + mOriginValue +
+                ", savePositionSeekBar=" + savePositionSeekBar +
+                '}';
     }
 }

@@ -17,29 +17,24 @@ import dagger.Provides;
 
 @Module
 public class AdjustModule {
-    public static final String KEY_ADJUST_TOOL = "KEY_ADJUST_TOOL";
-    public static final String KEY_ADJUST_CONFIG = "KEY_ADJUST_CONFIG";
-
 
     @Provides
-    Map<String, Object> provideAdjust() {
+    List<Adjust> provideAdjust() {
         List<Adjust> adjusts = new ArrayList<>();
 
-        adjusts.add(new Adjust("Sharpness", R.drawable.icon_adjust_shaprness_dark, "Sharpness", 1, -1.0f, 10.0f, 0.0f));
-        adjusts.add(new Adjust("Temperature", R.drawable.icon_adjust_temperature_dark, "Vignette", 2, 0.0f, 1.0f, 0.5f));
-        adjusts.add(new Adjust("Hue", R.drawable.icon_adjust_hue_dark, "Vignette", 3, 0.0f, 1.0f, 0.5f));
-        adjusts.add(new Adjust("Brightness", R.drawable.icon_adjust_brightness_dark, "Brightness", 4, -1.0f, 1, 0));
-        adjusts.add(new Adjust("Contrast", R.drawable.icon_adjust_contrast_dark, "Contrast", 5, 0.1f, 3.0f, 1.0f));
-        adjusts.add(new Adjust("Vibrance", R.drawable.icon_adjust_vibrance_dark, "Vignette", 6, 0.0f, 1.0f, 0.5f));
-        adjusts.add(new Adjust("Saturation", R.drawable.icon_adjust_saturation_dark, "Saturation", 7, 0.0f, 3.0f, 1.0f));
-        adjusts.add(new Adjust("Vignette", R.drawable.icon_adjust_vignette_dark, "Vignette", 8, 0.0f, 1.0f, 0.5f));
-        adjusts.add(new Adjust("Light Center", R.drawable.icon_adjust_light_center_dark, "Vignette", 9, 0.0f, 1.0f, 0.5f));
+        adjusts.add(new Adjust("Sharpness", R.drawable.icon_adjust_shaprness_dark, 0, -1.0f, 10.0f, 0.0f));
+        adjusts.add(new Adjust("Brightness", R.drawable.icon_adjust_brightness_dark, 1, -1.0f, 1, 0));
+        adjusts.add(new Adjust("Contrast", R.drawable.icon_adjust_contrast_dark, 2, 0.1f, 3.0f, 1.0f));
+        adjusts.add(new Adjust("Vignette", R.drawable.icon_adjust_vignette_dark, 3, 0.0f, 1.0f, 1.0f));
+        adjusts.add(new Adjust("Hue", R.drawable.icon_adjust_hue_dark, 4, 0.0f, 6.0f, 0.0f));
+        adjusts.add(new Adjust("Saturation", R.drawable.icon_adjust_saturation_dark, 5, 0.0f, 3.0f, 1.0f));
+        return adjusts;
+    }
 
-        String adjustConfig = "@adjust sharpen 0";
-        Map<String, Object> hashMap = new HashMap<>();
-        hashMap.put(KEY_ADJUST_TOOL, adjusts);
-        hashMap.put(KEY_ADJUST_CONFIG, adjustConfig);
+    @Provides
+    String provideAdjustConfig() {
+        return "@adjust sharpen 0 @adjust brightness 0 @adjust contrast 1 @vignette 1 0.15 @adjust hue 0 @adjust saturation 1";
 
-        return hashMap;
+
     }
 }

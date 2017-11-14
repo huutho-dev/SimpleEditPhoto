@@ -19,13 +19,14 @@ import javax.inject.Inject;
 public class AdjustPresenter extends MvpPresenter<AdjustView> {
 
     @Inject
-    Map<String, Object> mAdjustMap;
+    List<Adjust> mAdjusts;
+
+    @Inject
+    String mAdjustConfig;
 
     public AdjustPresenter(){
         App.editorComponent.inject(this);
-        getViewState().setupAdjustView(
-                (List<Adjust>) mAdjustMap.get(AdjustModule.KEY_ADJUST_TOOL),
-                (String) mAdjustMap.get(AdjustModule.KEY_ADJUST_CONFIG));
+        getViewState().setupAdjustView(mAdjusts,mAdjustConfig);
     }
 
 }

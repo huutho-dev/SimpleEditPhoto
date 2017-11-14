@@ -1,5 +1,6 @@
 package com.huutho.photo.edit.fragment.adjust;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -14,9 +15,12 @@ import com.huutho.photo.R;
 import com.huutho.photo.base.BaseToolFragment;
 import com.huutho.photo.models.Adjust;
 
+import org.wysaid.nativePort.CGENativeLibrary;
+
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
 /**
  * Created by ThoNh on 11/1/2017.
@@ -32,6 +36,7 @@ public class AdjustFragment extends BaseToolFragment implements AdjustView, Seek
     LinearLayout mAdjustToolLayout;
 
     private Adjust mCurrentAdjust;
+    private List<Adjust> mAdjustList;
 
 
     public static AdjustFragment newInstance() {
@@ -50,8 +55,8 @@ public class AdjustFragment extends BaseToolFragment implements AdjustView, Seek
 
     @Override
     public void setupAdjustView(List<Adjust> adjustList, String config) {
-        Log.e("ThoNH","fuck:" + config);
-        mImageGLSurfaceView.setFilterWithConfig("@adjust sharpen 0");
+        mAdjustList = adjustList;
+        mImageGLSurfaceView.setFilterWithConfig(config);
         for (int i = 0; i < adjustList.size(); i++) {
             final AdjustItem adjustItem = new AdjustItem(getContext());
             adjustItem.setData(adjustList.get(i));
@@ -64,8 +69,6 @@ public class AdjustFragment extends BaseToolFragment implements AdjustView, Seek
             });
         }
 
-//        // selected first adjust
-        onAdjustClick(adjustList.get(0));
     }
 
     @Override
@@ -74,6 +77,7 @@ public class AdjustFragment extends BaseToolFragment implements AdjustView, Seek
         mCurrentAdjust = adjust;
         mSeekValue.setText(String.valueOf(mSeekBar.getProgress() * 2 - 100));
         mSeekBar.setProgress((int) (mCurrentAdjust.savePositionSeekBar * mSeekBar.getMax()));
+        Log.e(TAG, "onAdjustClick: " + adjust.toString());
     }
 
 
@@ -81,19 +85,35 @@ public class AdjustFragment extends BaseToolFragment implements AdjustView, Seek
     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
         mSeekValue.setText(String.valueOf(progress * 2 - 100));
         float intensity = mCurrentAdjust.calcIntensity(progress / 100.0f);
-        Log.e("ThoNH","intensity:" + intensity);
-        mImageGLSurfaceView.setFilterIntensityForIndex(progress/10f,0, true);
-
-
+        mImageGLSurfaceView.setFilterIntensityForIndex(intensity, mCurrentAdjust.indexConfig, true);
     }
 
+    @Override
+    public void onReset() {
+        super.onReset();
+        mImageGLSurfaceView.setFilterIntensityForIndex(0, mCurrentAdjust.indexConfig, true);
+    }
 
     @Override
     public void onSave() {
+        Bitmap bitmap = Bitmap.createBitmap(getBitmapSurfaceView());
+        String mConfig =
+                "@adjust sharpen " + mAdjustList.get(0).mCurrentValue +
+                        " @adjust brightness " + mAdjustList.get(1).mCurrentValue +
+                        " @adjust contrast " + mAdjustList.get(2).mCurrentValue +
+                        " @vignette 1 0.15 " +
+                        " @adjust hue 0 " + mAdjustList.get(4).mCurrentValue +
+                        " @adjust saturation " + mAdjustList.get(5).mCurrentValue;
+
+        Log.e("ThoNH","mConfig:" + mConfig);
+        bitmap = CGENativeLibrary.filterImage_MultipleEffects(bitmap, mConfig, 1.0f);
+        setBitmapSurfaceView(bitmap);
     }
 
     @Override
     public void onCancel() {
-
+        Bitmap bitmap = CGENativeLibrary.filterImage_MultipleEffects(getBitmapSurfaceView(), "", 1.0f);
+        setBitmapSurfaceView(bitmap);
     }
+
 }
